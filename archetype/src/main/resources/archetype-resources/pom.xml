@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>com.deciphernow</groupId>
+        <artifactId>gm-fabric</artifactId>
+        <version>${serviceFrameworkVersion}</version>
+    </parent>
+
+    <properties>
+        <version.java.source>1.8</version.java.source>
+        <version.java.target>1.8</version.java.target>
+
+        <version.gm-fabric>${serviceFrameworkVersion}</version.gm-fabric>
+
+        <version.rpm.${artifactId}>0.1.0</version.rpm.${artifactId}>
+        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+
+        <!-- Scala -->
+        <version.scala.major>2.11</version.scala.major>
+        <version.scala>${version.scala.major}.8</version.scala>
+        <version.scala.test>2.2.1</version.scala.test>
+        <version.typesafe.scala-logging>2.1.2</version.typesafe.scala-logging>
+
+        <finatra.version>${version.twitter.finatra}</finatra.version>
+        <version.finatra>${version.twitter.finatra}</version.finatra>
+
+        <!-- Generic Logging -->
+        <version.logback>1.1.2</version.logback>
+        <version.slf4j>1.7.9</version.slf4j>
+        <version.log4j>1.2.15</version.log4j>
+
+        <!-- Testing -->
+        <version.junit>4.10</version.junit>
+        <version.mockito>1.9.5</version.mockito>
+
+    </properties>
+
+    <artifactId>${artifactId}</artifactId>
+    <groupId>${groupId}</groupId>
+    <version>${version}</version>
+    <packaging>pom</packaging>
+
+</project>
