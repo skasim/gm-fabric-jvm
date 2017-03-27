@@ -1,6 +1,6 @@
 # PROLOG
 
-This product is a micro-service framework for the JVM and is intended to be built upon and extended. We have made an initial release of the source code, and continue to work actively to make it better. We hope to build an active open source community that drives the future of this framework, both by providing feedback and by actively contributing to the source code.
+This product is a microservice framework for the JVM and is intended to be built upon and extended. We have made an initial release of the source code, and continue to work actively to make it better. We hope to build an active open source community that drives the future of this framework, both by providing feedback and by actively contributing to the source code.
 
 # gm-fabric-jvm ( gmf )
 ---
@@ -9,7 +9,7 @@ This project is built on top of Twitters Finagle and Finatra libraries. The core
 
 This project has two modules core and archetype. The core module has the underlying business logic that abstracts the Thrift and RESTful capabilities from the developer. The archetype module is used to build out a microservice.
 
-A micro-service ( MS ) is composed of four modules defined in the table below.
+A microservice ( MS ) is composed of four modules defined in the table below.
 	
 | Module | Description |
 | -------| ----------- |
@@ -18,21 +18,26 @@ A micro-service ( MS ) is composed of four modules defined in the table below.
 | model | Thrift model. |
 | server | REST and Thrift endpoints. |
 
+## Latest release
+
+
 ## Perquisite
 You will need to install maven 3.3.x.
     
-## How to Build This Codebase
+## How to Build the latest release
+After cloning the repo, checkout tag __gm-fabric-jvm-0.1.0__
+  
 Build and install this project.
 
     mvn clean install
     
-This will also install the archetype required to build your micro-service.
+This will also install the archetype required to build your microservice.
     
 ## How to do stuff
-The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a micro-service.
+The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a microservice.
 
 ## Coding
-The various aspects of coding a micro-service.
+The various aspects of coding a microservice.
 
 <!-- https://github.com/DecipherNow -->
 
@@ -40,25 +45,23 @@ The various aspects of coding a micro-service.
 - [How to add logging to my microservice.](documentation/Logging.md)
 - [Expanding thrift capabilities.](documentation/Thrift.md)
 - [How to write clients.](documentation/Clients.md)
-[]( - [Add AAC client.](documentation/AddingAACClient.md))
 - [How to decrypt encrypted string resources.](documentation/ResourceDecrypter.md)
 - [Adding API documentation to your microservice.](documentation/APIDocumentation.md)
 - [How to build an RPM.](documentation/RPM.md)
 - [How to upgrade the microservice framework with new Twitter libraries.](documentation/UpgradingFramework.md)
 
 ## Configuration
-The various aspects of configuring a micro-service.
+The various aspects of configuring a microservice.
 
 - [Available parameters to configure for the microservice.](documentation/Parameters.md)
 - [How to register the microservice for auto-discovery.](documentation/ZookeeperAutoDiscovery.md)
 - [How to register IP addresses for auto discovery.](documentation/ConfigureIPAddressResolution.md)
 - [How to enable 2-Way SSL.](documentation/TwoWaySSL.md)
 - [How to decrypt encrypted string resources.](documentation/ResourceDecrypter.md)
-[](- [Add Auto Scaling Group plugin for AWS.](documentation/AutoScalingGroup.md))
 - [How to configure the microservice framework on windows.](documentation/MicrosoftWindowsConfiguration.md)
 
 ## Filters
-How to configure filters and what they provide for your micro-service.
+How to configure filters and what they provide for your microservice.
 
 - [How to enforce security on RESTful interfaces (AclRestFilter).](documentation/AclRestFilter.md)
 - [How to capture metrics for dynamic URI's (GenericUriStatsFilter) ](documentation/GenericUriStatsFilter.md)
@@ -66,7 +69,7 @@ How to configure filters and what they provide for your micro-service.
 
 
 ## Administration
-How to administer your micro-service.
+How to administer your microservice.
 
 - [How to administer the microservice.](documentation/Admin.md)
 

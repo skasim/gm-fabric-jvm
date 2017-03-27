@@ -2,7 +2,7 @@
 The micro service framework contains necessary logic to enable two factor SSL on the REST and Thrift transport. This feature enables application developers to easily support the User/System Access Pattern (PKI Two-Way SSL) patterns without the hassle of trying to inject the necessary dependencies and code needed to support this feature. 
 
 - Prerequisites
-    - Must have a running micro-service based on the DecipherNow micro-service framework. See ![](CreateNewMS.md)
+    - Must have a running microservice based on the DecipherNow microservice framework. See ![](CreateNewMS.md)
     - Must have a valid test certificate. It must be signed by the CA that was used to sign the truststore.
     
 ## Step-by-step
@@ -10,7 +10,7 @@ The micro service framework contains necessary logic to enable two factor SSL on
 ### Configure 2-Way SSL
 
 - Acquire the keystore / truststore jks files.
-- Copy both *.jks to the `etc` dir of the micro-service.
+- Copy both *.jks to the `etc` dir of the microservice.
 - Edit `parameters.config` in `etc` and add the following:
 
     Keystore:

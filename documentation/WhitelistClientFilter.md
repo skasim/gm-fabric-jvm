@@ -9,9 +9,9 @@ This filter is the gatekeeper in allowing services to access the service through
 
 ### Enabling ACL
 
-- A micro-service project
+- A microservice project
 
-#### Micro-service project
+#### Microservice project
 
 - Go to __some-microservice/server/src/main/package/etc__ and create a file called __accessControlList.txt__ ( The name can be whatever you want it to be )
 - Within the __accessControlList.txt__ add the __PKI__ certificate DNs that are able to access this service.

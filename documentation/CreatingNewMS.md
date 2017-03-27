@@ -1,8 +1,8 @@
 # Overview
-This document explains how to create a new micro-service and it's various components. A maven archetype has been created to assist in creating a new service implementation.  The archetype will create a new maven project that has the following:
+This document explains how to create a new microservice and it's various components. A maven archetype has been created to assist in creating a new service implementation.  The archetype will create a new maven project that has the following:
 
 ## Perquisite
-You have to have built the micro-service framework. See ![README](../README.md)
+You have to have built the microservice framework. See ![README](../README.md)
 
 You need to install the tanuki software service wrapper delta pack into your local Maven repository.
 
@@ -13,7 +13,7 @@ You need to install the tanuki software service wrapper delta pack into your loc
 ## Getting started.
 - Open a terminal.
 - Go to a location where you would like your ervice to be created at.
-- Create the micro-service
+- Create the microservice
 
     $ mvn archetype:generate -DarchetypeGroupId=com.deciphernow -DarchetypeArtifactId=gm-fabric-archetype -DarchetypeVersion=0.2.0-SNAPSHOT
 
@@ -92,8 +92,8 @@ The following module and directory structure is generated.
         
 - To build [RPM](RPM.md)        
     
-- Start the micro-service
-    - Traverse into the micro-service:
+- Start the microservice
+    - Traverse into the microservice:
     
             $ cd myfirstmicroservice/server/target/myfirstmicroservice-server-0.2.0-SNAPSHOT-app/myfirstmicroservice-server-0.2.0-SNAPSHOT/bin
         
@@ -105,7 +105,7 @@ The following module and directory structure is generated.
 
             $ myfirstmicroservice start
         
-- Stopping the micro-service
+- Stopping the microservice
     - If in foreground, just __crtl-c__
     - If in background:
         
@@ -125,8 +125,8 @@ The following ports are the default ports:
 ## Administration
 To access the [administration](Admin.md) and see active services http://localhost:9990/admin
 
-## Testing my micro-service
-To see your micro-service running without SSL.
+## Testing my microservice
+To see your microservice running without SSL.
 From the command line:
 
     cd myfirstmicroservice/server/target/myfirstmicroservice-server-0.2.0-SNAPSHOT-app/myfirstmicroservice-server-0.2.0-SNAPSHOT/bin
@@ -144,7 +144,7 @@ In your browser hit the ping / pong endpoint:
 ## Full example 
 ![MyFirstMicroservice full example](ExampleGeneratedExec.md)
 
-### Out of the box, the generated micro-service does not have SSL configured. 
+### Out of the box, the generated microservice does not have SSL configured. 
 This makes for easy testing that the base structure was generated correctly.
 
     package com.somepackage

@@ -1,5 +1,5 @@
 # Overview
-This documentation talks to how to add aglio to your micro-service project. Realize that the micro-service framework does not come prepackaged with a documentation generator tool. It is up to the developer to add it to their explicit project.
+This documentation talks to how to add aglio to your microservice project. Realize that the microservice framework does not come prepackaged with a documentation generator tool. It is up to the developer to add it to their explicit project.
 
 ## Base documentation 
 The pattern is to define three explicit files, __home.md__, __rest.md__ and __thrift.md__. Add two directories to the __server__ project, __src/main/apiblueprint/resources__ for source documentation files and __src/main/apiblueprint/scripts__ for shell scripts to be called by __maven__. More document files may be added, but at minimum the pattern is to have these three files in your microservice.

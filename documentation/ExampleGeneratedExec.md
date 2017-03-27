@@ -1,7 +1,7 @@
 # Overview
-This document is a live example of roughly what you will see when you generate your first micro-service and execute it.
+This document is a live example of roughly what you will see when you generate your first microservice and execute it.
 
-# Creating the micro-service.
+# Creating the microservice.
 
 ## Generation command
 

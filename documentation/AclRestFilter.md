@@ -1,5 +1,5 @@
 # Overview
-This document discusses how to set up the AclRestFilter and configure it to protect HTTP and HTTPS endpoints in the your micro-service.
+This document discusses how to set up the AclRestFilter and configure it to protect HTTP and HTTPS endpoints in the your microservice.
 
 # Prerequisites
 

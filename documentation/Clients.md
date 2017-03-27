@@ -1,12 +1,12 @@
 # Overview
-This document explains how to leverage the micro-service framework client factory as well as how to write RESTful clients.
+This document explains how to leverage the microservice framework client factory as well as how to write RESTful clients.
 
 ## Assumptions
 These examples assume you have created a test-client module and the correct resources have been assigned.
 
 ## Client 
-When needing to connect to a micro-service with a client that requires performance then leveraging the particular micro-services' ThriftClientFactory
-to create the client is recommended. This should be done if one micro-service needs to communicate with another micro-service. The returned client can
+When needing to connect to a micro-microservice with a client that requires performance then leveraging the particular microservices' ThriftClientFactory
+to create the client is recommended. This should be done if one micro-microservice needs to communicate with another microservice. The returned client can
 be configured for non-SSL or SSL.
 
 Example MyFirstMicroserviceClientFactory ( extends ThriftClientFactory ) : thrift client non-SSL   
@@ -35,11 +35,11 @@ Example MyFirstMicroserviceClientFactory ( extends ThriftClientFactory ) : thrif
       }
     }    
 
-The __MyFirstMicroserviceClientFactory__ is generated in your micro-service project. The __TlsConfigUtil__ is provided by the __gmf__.
+The __MyFirstMicroserviceClientFactory__ is generated in your microservice project. The __TlsConfigUtil__ is provided by the __gmf__.
 
 
 ## Create thrift clients using ServiceIface
-Writing test clients that do not leverage the micro-services client factory.
+Writing test clients that do not leverage the microservices client factory.
 
 Example thrift client non-SSL
 
