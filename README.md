@@ -21,7 +21,7 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 ## Latest release
 
 
-## Perquisite
+## Prerequisite
 You will need to install maven 3.3.x.
     
 ## How to Build the latest release
