@@ -13,6 +13,38 @@
         <module>archetype</module>
     </modules>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:deciphernow/gm-fabric-jvm.git</connection>
+        <developerConnection>scm:git:git@github.com:deciphernow/gm-fabric-jvm.git</developerConnection>
+        <url>https://github.com/deciphernow/gm-fabric-jvm</url>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <developers>
+        <developer>
+            <name>Garth Hershfield</name>
+            <organization>Decipher Technology Studios</organization>
+            <email>garth.hershfield@deciphernow.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -45,7 +77,13 @@
         <version.junit>4.10</version.junit>
         <version.mockito>1.9.5</version.mockito>
 
+        <!-- Deployment -->
+        <version.bouncycastle.plugin>1.0.0</version.bouncycastle.plugin>
+        <version.javadoc.plugin>2.10.4</version.javadoc.plugin>
+        <version.source.plugin>3.0.1</version.source.plugin>
+        <version.vault.plugin>1.0.0</version.vault.plugin>
     </properties>
+
     <repositories>
         <repository>
             <id>Sonatype</id>
@@ -200,5 +238,71 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.deciphernow</groupId>
+                        <artifactId>bouncycastle-maven-plugin</artifactId>
+                        <version>${version.bouncycastle.plugin}</version>
+                        <configuration>
+                            <passphrase>${pgp.passphrase}</passphrase>
+                            <rings>${pgp.private}</rings>
+                            <userId>build@deciphernow.com</userId>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.deciphernow</groupId>
+                        <artifactId>vault-maven-plugin</artifactId>
+                        <version>${version.vault.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>pull</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>pull</goal>
+                                </goals>
+                                <configuration>
+                                    <servers>
+                                        <server>
+                                            <url>${env.VAULT_SERVER}</url>
+                                            <token>${env.VAULT_TOKEN}</token>
+                                            <paths>
+                                                <path>
+                                                    <name>pgp-keys/build</name>
+                                                    <mappings>
+                                                        <mapping>
+                                                            <key>pgp.passphrase</key>
+                                                            <property>pgp.passphrase</property>
+                                                        </mapping>
+                                                        <mapping>
+                                                            <key>pgp.private</key>
+                                                            <property>pgp.private</property>
+                                                        </mapping>
+                                                    </mappings>
+                                                </path>
+                                            </paths>
+                                        </server>
+                                    </servers>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

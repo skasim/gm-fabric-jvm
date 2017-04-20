@@ -14,6 +14,11 @@
     <packaging>jar</packaging>
     <name>Micro-service framework [Core]</name>
 
+    <properties>
+        <version.scala.plugin>3.1.0</version.scala.plugin>
+        <version.enforcer.plugin>1.4.1</version.enforcer.plugin>
+    </properties>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -32,7 +37,7 @@
                 <!-- see http://davidb.github.com/scala-maven-plugin -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <!--<version></version>-->
+                <version>${version.scala.plugin}</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -70,6 +75,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${version.enforcer.plugin}</version>
                 <configuration>
                     <rules>
                         <bannedPlugins>
