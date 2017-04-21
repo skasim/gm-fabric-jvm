@@ -1,15 +1,29 @@
 package com.deciphernow.server.rest
 
-import com.deciphernow.server.support.Decryptor
-import com.deciphernow.server.tls.{TlsConfigUtil, TlsServerUtil}
+
+/*
+    Copyright 2017 Decipher Technology Studios LLC
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+import com.deciphernow.server.tls.TlsServerUtil
 import com.deciphernow.server.{config => configuration}
 import com.deciphernow.server.support.{Decryptor, DecryptorManager}
 import com.twitter.finagle.http.{Request => FinagleRequest, Response => FinagleResponse}
-import com.twitter.finagle.transport.{TlsConfig, Transport}
-//import com.twitter.finagle.netty3.Netty3ListenerTLSConfig
+import com.twitter.finagle.transport.Transport
 import com.twitter.finagle.{Filter, Http}
 import com.twitter.finatra.http.filters.{AccessLoggingFilter, ExceptionMappingFilter, StatsFilter}
-import com.twitter.finatra.http.internal.server.BaseHttpServer
 import com.twitter.finatra.http.routing.HttpRouter
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.logging.Logger
