@@ -20,6 +20,7 @@
     <packaging>pom</packaging>
     <name>Micro-service framework</name>
     <description>A microservice framework for the JVM.</description>
+    <url>https://github.com/deciphernow/gm-fabric-jvm</url>
 
     <modules>
         <module>core</module>
@@ -226,6 +227,138 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.deciphernow</groupId>
+                    <artifactId>bouncycastle-maven-plugin</artifactId>
+                    <version>${version.bouncycastle.plugin}</version>
+                    <configuration>
+                        <passphrase>${pgp.passphrase}</passphrase>
+                        <rings>${pgp.private}</rings>
+                        <userId>build@deciphernow.com</userId>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.deciphernow</groupId>
+                    <artifactId>vault-maven-plugin</artifactId>
+                    <version>${version.vault.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>pull</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>pull</goal>
+                            </goals>
+                            <configuration>
+                                <servers>
+                                    <server>
+                                        <url>${env.VAULT_SERVER}</url>
+                                        <token>${env.VAULT_TOKEN}</token>
+                                        <paths>
+                                            <path>
+                                                <name>pgp-keys/build</name>
+                                                <mappings>
+                                                    <mapping>
+                                                        <key>pgp.passphrase</key>
+                                                        <property>pgp.passphrase</property>
+                                                    </mapping>
+                                                    <mapping>
+                                                        <key>pgp.private</key>
+                                                        <property>pgp.private</property>
+                                                    </mapping>
+                                                </mappings>
+                                            </path>
+                                        </paths>
+                                    </server>
+                                </servers>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>${version.scala.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>scala-compile-first</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-attach-scaladocs</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>doc-jar</goal>
+                            </goals>
+                            <configuration>
+                                <args>
+                                    <arg>-no-link-warnings</arg>
+                                </args>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${version.java.source}</source>
+                        <target>${version.java.target}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version.javadoc.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${version.source.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
     <profiles>
         <profile>
             <id>deploy</id>
@@ -234,77 +367,18 @@
                     <plugin>
                         <groupId>com.deciphernow</groupId>
                         <artifactId>bouncycastle-maven-plugin</artifactId>
-                        <version>${version.bouncycastle.plugin}</version>
-                        <configuration>
-                            <passphrase>${pgp.passphrase}</passphrase>
-                            <rings>${pgp.private}</rings>
-                            <userId>build@deciphernow.com</userId>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>com.deciphernow</groupId>
                         <artifactId>vault-maven-plugin</artifactId>
-                        <version>${version.vault.plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>pull</id>
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>pull</goal>
-                                </goals>
-                                <configuration>
-                                    <servers>
-                                        <server>
-                                            <url>${env.VAULT_SERVER}</url>
-                                            <token>${env.VAULT_TOKEN}</token>
-                                            <paths>
-                                                <path>
-                                                    <name>pgp-keys/build</name>
-                                                    <mappings>
-                                                        <mapping>
-                                                            <key>pgp.passphrase</key>
-                                                            <property>pgp.passphrase</property>
-                                                        </mapping>
-                                                        <mapping>
-                                                            <key>pgp.private</key>
-                                                            <property>pgp.private</property>
-                                                        </mapping>
-                                                    </mappings>
-                                                </path>
-                                            </paths>
-                                        </server>
-                                    </servers>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${version.source.plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${version.javadoc.plugin}</version>
                     </plugin>
                 </plugins>
             </build>
