@@ -1,5 +1,5 @@
 # Overview
-This document is a live example of roughly what you will see when you generate your first microservice and execute it.
+This document is a live example of roughly what you will see when you generate your first microservice and execute it using the latest release of the framework.
 
 # Creating the microservice.
 
