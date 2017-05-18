@@ -5,10 +5,6 @@
 #
 {
    DTS=`date "+_%Y_%m_%d_%H_%M_%S_%s"`
-   APP=${rpm.install.dir}/${app.name}-${project.parent.version}
+   APP=${rpm.basePath}/${app.name}-${major.minor}
    mv ${APP}_bkp ${APP}_bkp$DTS
-   if [ -e "${APP}" ]
-   then
-        rm -rf ${APP}
-   fi
 }

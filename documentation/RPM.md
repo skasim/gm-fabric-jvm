@@ -26,22 +26,25 @@ The attributes and plugins are located at the root level POM and server POM. If 
 In the root level project pom.xml there are two properties provided. The following properties are located in the root level POM in '\<properties\>' section.
 
 ### RPM version number "<rpm.version/>"
-The first property will be the version assigned to the RPM. Both this attribute and __<rpm.release/>__ are used to build the final name of the RPM.
+The first property will be the version assigned to the RPM. Both this attribute and __<rpm.release/>__ are used to build the final name of the RPM. The attribute __<major.minor/>__ is used appended to the name of the service. This allows for multiple installations of the service on one server. The value assigned should equal the __MAJOR__ __MINOR__ of the defined API.
 
-        <rpm.version>1.0.0</rpm.version>
+        <!--
+          RPM version cannot have "-SNAPSHOT" && BuildNumber in it.
+          Thus one has to manually update the version converting any '-' to '_'.
+        -->
+        <version.rpm>0.1.0_SNAPSHOT</version.rpm> <!-- This is used in 'server/pom.xml' -->
+        <major.minor>0.1</major.minor>
        
 ## Server POM configuration
 There are six properties in '\<properties\>' section of the 'server/pom.xml' that are leveraged through out the maven plugins as well as the shell scripts that get executed during RPM install or removal.
 
         
-        <app.name>${symbol_dollar}{artifactId}</app.name>
+        <app.name>${project.artifactId}</app.name>
 
-        <!-- todo: Fill in user that the application will run as. -->
-        <app.runUser/>
-        <app.runGroup>${symbol_dollar}{app.runUser}</app.runGroup>
+        <app.runUser>srvcuser</app.runUser>
+        <app.groupName>services</app.groupName>
 
-        <rpm.version>${symbol_dollar}{version.rpm.${rootArtifactId}}</rpm.version>
-        <rpm.release>0.${maven.build.timestamp}</rpm.release>
+        <rpm.version>${version.rpm}</rpm.version>
 
         <!--
 
@@ -49,7 +52,7 @@ There are six properties in '\<properties\>' section of the 'server/pom.xml' tha
 
             todo: Fill in the path that the application is going to install in.
         -->
-        <rpm.install.dir>/opt/.....</rpm.install.dir>
+        <rpm.basePath>/opt/services</rpm.basePath>
 
 ### Assign USER "<app.runUser/>"
 Of the six provided properties, you only need to fix two of them. For '\<app.runUser/\>' assign it a user by encasing the username in a START and END XML tag.
@@ -73,16 +76,16 @@ The following plugin builds the RPM. As it is configured in this framework, ther
                 <artifactId>rpm-maven-plugin</artifactId>
                 <version>2.1-alpha-4</version>
                 <configuration>
-                    <name>${app.name}</name>
+                    <name>${app.name}-${major.minor}</name>
                     <version>${rpm.version}</version>
-                    <release>${rpm.release}</release>
-                    <prefix>${rpm.install.dir}</prefix>
+                    <release>${buildNumber}</release>
+                    <prefix>${rpm.basePath}</prefix>
                     <sourceEncoding>UTF-8</sourceEncoding>
                     <group>Applications/Engineering</group>
                     <defaultDirmode>755</defaultDirmode>
                     <defaultFilemode>644</defaultFilemode>
                     <defaultUsername>${app.runUser}</defaultUsername>
-                    <defaultGroupname>${app.runGroup}</defaultGroupname>
+                    <defaultGroupname>${app.groupName}</defaultGroupname>
                     <defineStatements>
                         <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
                         <defineStatement>_tmppath /tmp</defineStatement>
@@ -118,7 +121,7 @@ The following plugin builds the RPM. As it is configured in this framework, ther
 
                     <mappings>
                         <mapping>
-                            <directory>${rpm.install.dir}/${app.name}-${project.version}</directory>
+                            <directory>${rpm.basePath}/${app.name}-${major.minor}</directory>
                             <filemode>775</filemode>
                             <sources>
                                 <source>
@@ -134,14 +137,14 @@ The following plugin builds the RPM. As it is configured in this framework, ther
                             <directoryIncluded>false</directoryIncluded>
                             <sources>
                                 <softlinkSource>
-                                    <location>${rpm.install.dir}/${app.name}-${project.version}/bin/${app.name}</location>
-                                    <destination>${app.name}-${rpm.version}</destination>
+                                    <location>${rpm.basePath}/${app.name}-${major.minor}/bin/${app.name}</location>
+                                    <destination>${app.name}-${major.minor}</destination>
                                 </softlinkSource>
                             </sources>
                         </mapping>
                     </mappings>
                 </configuration>
-            </plugin>          
+            </plugin>        
 
 ## Scripts
 The shell scripts that the MAVEN RPM plugin leverage uses a resource plugin to set everything up for it.
@@ -238,13 +241,22 @@ Before the RPM is installed, if the user does NOT exist, create the user. This u
         
         #!/bin/sh -
         
+        
         {
+        #
+        # Add group.
+        HAVE_GROUP=`getent group ${app.groupName}`
+        if [ "$HAVE_GROUP" == "" ]
+        then
+          groupadd ${app.groupName}
+        fi
+        
         #
         # Create user account.
         HAVE_USER=`getent passwd ${app.runUser}`
         if [ "$HAVE_USER" == "" ]
         then
-            useradd --no-create-home --system --user-group ${app.runUser}
+           useradd --no-create-home --system --group ${app.groupName} --user ${app.runUser}
         fi
         
         #
@@ -253,12 +265,14 @@ Before the RPM is installed, if the user does NOT exist, create the user. This u
         HAVE_STIGGED_GROUPS=`ls $GROUP_ACCESS 2>/dev/null`
         if [ "$HAVE_STIGGED_GROUPS" == "" ]
         then
-           echo "${app.runGroup}" > $GROUP_ACCESS
+           echo "${app.groupName}" > $GROUP_ACCESS
+           echo "${app.runUser}" >> $GROUP_ACCESS
         else
-           ALREADY_HAVE=`grep ${app.runGroup} $GROUP_ACCESS 2>/dev/null`
+           ALREADY_HAVE=`grep ${app.groupName} $GROUP_ACCESS 2>/dev/null`
            if [ "$ALREADY_HAVE" == "" ]
            then
-             echo "${app.runGroup}" >> $GROUP_ACCESS
+             echo "${app.groupName}" >> $GROUP_ACCESS
+             echo "${app.runUser}" >> $GROUP_ACCESS
            fi
         fi
         }
@@ -269,10 +283,8 @@ After the RPM is installed, create a service, but don't turn it on.
         #!/bin/sh -
         
         {
-        ############################
         # Create service::
-        ############################
-        chkconfig --add ${app.name}-${rpm.version}
+        chkconfig --add ${app.name}-${major.minor}
         }
         
 ### Pre-Remove script
@@ -281,21 +293,23 @@ Before the RPM packaging is removed, if the service is on, stop it. As well, bac
         #!/bin/sh -
         
         {
-        echo "Stopping service [﻿${app.name}-${rpm.version} ]..."
-        service ${app.name}-${rpm.version} stop || true
+        
+        echo "Stopping service [﻿${app.name}-${major.minor} ]..."
+        service ${app.name}-${major.minor} stop || true
         
         #
         # Backup the current install. Remove the unneeded directories.
         # Doing this to keep the configuration and logs of the install being removed.
         # May want to re-use the configureation & review the logs.
         #
-        APP=${rpm.install.dir}/${app.name}-${project.parent.version}
+        APP=${rpm.basePath}/${app.name}-${major.minor}
         if [ -e "${APP}" ]
         then
-          cd ${rpm.install.dir}
+          cd ${rpm.basePath}
           cp -a ${APP} ${APP}_bkp
           rm -rf ${APP}_bkp/{bin,lib}
         fi
+        
         }
         
 ### Post-Remove script
@@ -308,18 +322,6 @@ After the RPM contents have been removed, move the backed-up service to have a t
         #
         {
            DTS=`date "+_%Y_%m_%d_%H_%M_%S_%s"`
-           APP=${rpm.install.dir}/${app.name}-${project.parent.version}
+           APP=${rpm.basePath}/${app.name}-${major.minor}
            mv ${APP}_bkp ${APP}_bkp$DTS
-           if [ -e "${APP}" ]
-           then
-                rm -rf ${APP}
-           fi
         }
-        
-
-        
-        
-
-
-        
-        

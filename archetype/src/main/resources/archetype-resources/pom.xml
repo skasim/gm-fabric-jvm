@@ -14,9 +14,6 @@
 
         <version.gm-fabric>${serviceFrameworkVersion}</version.gm-fabric>
 
-        <version.rpm.${artifactId}>0.1.0</version.rpm.${artifactId}>
-        <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
-
         <!-- Scala -->
         <version.scala.major>2.11</version.scala.major>
         <version.scala>${version.scala.major}.8</version.scala>
@@ -25,6 +22,13 @@
 
         <finatra.version>${version.twitter.finatra}</finatra.version>
         <version.finatra>${version.twitter.finatra}</version.finatra>
+
+        <!--
+          RPM version cannot have "-SNAPSHOT" && BuildNumber in it.
+          Thus one has to manually update the version converting any '-' to '_'.
+        -->
+        <version.rpm>0.1.0_SNAPSHOT</version.rpm> <!-- This is used in 'server/pom.xml' -->
+        <major.minor>0.1</major.minor>
 
         <!-- Generic Logging -->
         <version.logback>1.1.2</version.logback>

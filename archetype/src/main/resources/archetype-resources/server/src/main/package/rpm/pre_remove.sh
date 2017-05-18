@@ -1,18 +1,19 @@
 #!/bin/sh -
 
 {
-echo "Stopping service [﻿${app.name}-${rpm.version} ]..."
-service ${app.name}-${rpm.version} stop || true
+
+echo "Stopping service [﻿${app.name}-${major.minor} ]..."
+service ${app.name}-${major.minor} stop || true
 
 #
 # Backup the current install. Remove the unneeded directories.
 # Doing this to keep the configuration and logs of the install being removed.
 # May want to re-use the configureation & review the logs.
 #
-APP=${rpm.install.dir}/${app.name}-${project.parent.version}
+APP=${rpm.basePath}/${app.name}-${major.minor}
 if [ -e "${APP}" ]
 then
-  cd ${rpm.install.dir}
+  cd ${rpm.basePath}
   cp -a ${APP} ${APP}_bkp
   rm -rf ${APP}_bkp/{bin,lib}
 fi
