@@ -53,7 +53,7 @@ class GMFabricThriftServer(filters: Seq[SimpleFilter[Array[Byte], Array[Byte]]],
       return
     }
     val stateSsl = SupportUtils.isSsl
-    val serverLabel = SupportUtils.createServerLabel(serverPrefixLabel,stateSsl)
+    val serverLabel = "thrift"
     val statsFilter = new ThriftMethodStatsFilter(Protocols.binaryFactory(),"srv/" + serverLabel,"/method/")
     val newSequenceFilters = filters :+ statsFilter
     val compositeService = newSequenceFilters.foldRight(ThriftUtil.serverFromIface(service,Protocols.binaryFactory()))(_ andThen _)

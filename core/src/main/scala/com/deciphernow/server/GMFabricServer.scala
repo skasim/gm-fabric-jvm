@@ -66,8 +66,7 @@ abstract class GMFabricServer extends App {
         thriftServer.foreach(_ => {
           thriftServer.get.main(Array())
           log.ifInfo(s"thrift server started on port ${configuration.thrift.port()}")
-          log.ifDebug("server label is -> " + SupportUtils.createServerLabel("thrift",SupportUtils.isSsl))
-          announce(thriftServer.get.getServer,SupportUtils.createServerLabel("thrift",SupportUtils.isSsl))
+          announce(thriftServer.get.getServer,"thrift")
         })
       case _ => log.info("No thrift server defined.")
     }

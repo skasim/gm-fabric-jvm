@@ -24,19 +24,6 @@ import com.deciphernow.server.{config => configuration}
 object SupportUtils {
 
   /**
-    * Create the thrift label to identify if the thrift service is non-ssl or 2-way ssl.
-    *
-    * @param sslState
-    * @return
-    */
-    def createServerLabel(prefix: String, sslState : Boolean) : String = {
-      sslState match {
-        case true  => prefix + "::ssl"
-        case false => prefix + "::non-ssl"
-      }
-    }
-
-  /**
     * Have both jks required for 2-way SSL been provided?
     *
     * @return
