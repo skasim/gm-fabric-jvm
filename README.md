@@ -19,7 +19,8 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 | server | REST and Thrift endpoints. |
 
 ## Latest release
-[gm-fabric-jvm-0.1.3](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.1.3)
+- [gm-fabric-jvm-0.1.4](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.1.4)
+- [Release Notes:](documentation/ReleaseNotes.md)
 
 ## Prerequisite
 You will need to install maven 3.3.x.
