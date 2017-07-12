@@ -15,7 +15,7 @@ if [ -e "${APP}" ]
 then
   cd ${rpm.basePath}
   cp -a ${APP} ${APP}_bkp
-  rm -rf ${APP}_bkp/{bin,lib}
+  rm -rf ${APP}_bkp/{bin,lib,logs}
 fi
 
 }
