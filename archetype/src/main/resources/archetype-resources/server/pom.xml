@@ -58,7 +58,7 @@
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
                     <revisionOnScmFailure>true</revisionOnScmFailure>
-                    <format>{0,number}.{1,date,yyyyMMddHHmm}</format>
+                    <format>{0,number,&#35;&#35;&#35;&#35;&#35;}.{1,date,yyyyMMddHHmm}</format>
                     <items>
                         <item>buildNumber</item>
                         <item>timestamp</item>

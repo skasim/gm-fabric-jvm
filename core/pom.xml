@@ -96,11 +96,6 @@
     </build>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.twitter</groupId>-->
-            <!--<artifactId>gmf-jvm-twitter-server_${version.scala.major}</artifactId>-->
-            <!--<version>${version.twitter.server}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>twitter-server_${version.scala.major}</artifactId>
