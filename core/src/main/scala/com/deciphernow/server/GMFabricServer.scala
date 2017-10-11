@@ -20,7 +20,6 @@ package com.deciphernow.server
 import java.net._
 
 import com.deciphernow.server.rest.GMFabricRestServer
-import com.deciphernow.server.support.SupportUtils
 import com.deciphernow.server.thrift.GMFabricThriftServer
 import com.twitter.app.App
 import com.twitter.finagle._
@@ -56,6 +55,9 @@ abstract class GMFabricServer extends App {
 
     useIpAddressResolution = configuration.ipAddress.enableIpAddressResolution.get.fold(false)(_ => true)
     networkInterfaceName = configuration.ipAddress.useNetworkInterfaceName.get.fold("")(definedInterfaceName => definedInterfaceName)
+    haveNetworkInterfaceName = (networkInterfaceName.trim.length > 0)
+
+    identifyHostOrIP
 
     sys.addShutdownHook(close(Time.fromSeconds(2)))
 
@@ -65,8 +67,7 @@ abstract class GMFabricServer extends App {
         thriftServer = Option(new GMFabricThriftServer(thrift.get.filters, thrift.get.service))
         thriftServer.foreach(_ => {
           thriftServer.get.main(Array())
-          log.ifInfo(s"thrift server started on port ${configuration.thrift.port()}")
-          announce(thriftServer.get.getServer,"thrift")
+          announcer(configuration.thrift.port(),"thrift")
         })
       case _ => log.info("No thrift server defined.")
     }
@@ -75,16 +76,10 @@ abstract class GMFabricServer extends App {
       case Some(_) =>
         log.ifDebug("creating restful server.")
         restServer = Option(new GMFabricRestServer(rest.get.filters, rest.get.controllers))
-        restServer.foreach( _ =>
-          if (configuration.zk.announcementPoint.equals("") || configuration.zk.zookeeperConnection.equals("")) {
-            restServer.get.main(Array())
-          }
-          else {
-            restServer.get.main(
-              Array(configureAnnouncement("-http.announce", "http"), configureAnnouncement("-https.announce", "https"), configureAnnouncement("-admin.announce", "admin"))
-            )
-          }
-        )
+        announcer(restServer.get.getAdminPort,"admin")
+        announcer(restServer.get.getHttpPort,"http")
+        announcer(restServer.get.getHttpsPort,"https")
+        restServer.get.main(Array())
       case _ => log.error("No rest server defined. All services will shutdown.")
     }
 
@@ -92,58 +87,103 @@ abstract class GMFabricServer extends App {
 
   var useIpAddressResolution : Boolean = false
   var networkInterfaceName : String = ""
+  var haveNetworkInterfaceName : Boolean = false
   private[this] var announcements = List.empty[Future[Announcement]]
+
+  // Hostname or IPAddress to be used to for endpoints.
+  var announceThis : String = ""
+
+  /**
+    * Registers endpoint with ZK.
+    * @param port
+    * @param scheme
+    */
+  def announcer(port : Option[String], scheme: String) : Unit = {
+    announcer(port.get,scheme)
+  }
+
+  /**
+    * Registers endpoint with ZK.
+    * @param port
+    * @param scheme
+    */
+  def announcer(port : String, scheme: String) : Unit = {
+    val tmp = if (port.startsWith(":")) {
+      port.substring(1)
+    }
+    else {
+      port
+    }
+    if (tmp.trim.length>0) {
+      try {
+        announcer(tmp.toInt,scheme)
+      }
+      catch { case e : Exception => log.ifInfo(e) }
+    }
+  }
+
+  /**
+    * Registers endpoint with ZK.
+    * @param port
+    * @param scheme
+    */
+  def announcer(port : Int, scheme: String) : Unit = {
+    val announcementPoint = s"zk!${configuration.zk.zookeeperConnection()}!${configuration.zk.announcementPoint()}/${scheme}!0"
+    val ann = Announcer.announce(new InetSocketAddress(announceThis, port), announcementPoint)
+    announcements ::= ann
+  }
 
 
   /**
-    *
-    * @param server
-    * @param scheme
+    * Looks up a specific interface to be used for registration to ZK.
+    * @param networkInterface
     */
-  private def announce(server: Option[ListeningServer], scheme: String): Unit = {
-    // Make the service known to the world
-    server foreach  { server =>
-      if (!configuration.zk.zookeeperConnection().isEmpty && !configuration.zk.announcementPoint().isEmpty) {
-        log.ifInfo(s"Announcing ${scheme} to Zookeeper at ${configuration.zk.announcementPoint()}")
-        val addr = s"zk!${configuration.zk.zookeeperConnection()}!${configuration.zk.announcementPoint()}/${scheme}!0"
-        if (useIpAddressResolution) {
-          val public = if (networkInterfaceName.length>0) {
-            getLocalAddressByName(server.boundAddress,networkInterfaceName)
-          }
-          else {
-            locateAddress(server.boundAddress)
-          }
-          val ann = Announcer.announce(public.asInstanceOf[InetSocketAddress], addr)
-          announcements ::= ann
-          ann
+  def getNetworkInfo(networkInterface: Option[NetworkInterface]) : Unit = {
+    networkInterface match {
+      case Some(v) => findNetworkInfo(v)
+      case None => log.ifInfo("NetworkInterface [" + networkInterfaceName + "] is NULL. Shutting down!")
+        System.exit(-1)
+    }
+  }
+
+  /**
+    * Iterates through the interfaces for a network looking for a valid interface to register with ZK.
+    * @param networkInterface
+    */
+  def findNetworkInfo(networkInterface: NetworkInterface) : Unit = {
+
+    if (networkInterface.isUp && !networkInterface.isLoopback && !networkInterface.isVirtual) {
+      val addresses = networkInterface.getInetAddresses
+
+      while (addresses.hasMoreElements && !(announceThis.trim.length > 0)) {
+        val anAddress = addresses.nextElement
+
+        if (anAddress.isInstanceOf[Inet4Address] && !anAddress.isLoopbackAddress) {
+          announceThis = if (useIpAddressResolution) { convertIpAddress(anAddress.getAddress) }
+          else { InetAddress.getLocalHost.getHostName}
         }
-        else {
-          server.announce(addr)
-        }
-      }
-      else {
-        log.ifWarning(s"Zookeeper announcement point not configured!  Not announcing ${scheme} services to Zookeeper!")
       }
     }
   }
 
   /**
-    *
-    * @param twitterAttribute
-    * @param scheme
-    * @return
+    * Register either the Hostname or IP Address for service endpoints to ZK.
     */
-  private def configureAnnouncement(twitterAttribute: String, scheme: String) : String = {
-    var announcement = ""
+  def identifyHostOrIP : Unit = {
     if (!configuration.zk.zookeeperConnection().isEmpty && !configuration.zk.announcementPoint().isEmpty) {
-      announcement = twitterAttribute + "=zk!" + configuration.zk.zookeeperConnection.get.get +
-              "!" + configuration.zk.announcementPoint.get.get + "/" + scheme + "!0"
+      if (haveNetworkInterfaceName) {
+        getNetworkInfo(Option(NetworkInterface.getByName(networkInterfaceName)))
+      }
+      else {
+        val networkInterfaces = NetworkInterface.getNetworkInterfaces
+        while (networkInterfaces.hasMoreElements && !(announceThis.trim.length > 0)) {
+          findNetworkInfo(networkInterfaces.nextElement)
+        }
+      }
     }
     else {
-      log.ifWarning(s"Zookeeper announcement point not configured!  Not announcing ${scheme} services to Zookeeper!")
+      log.ifInfo("Zookeeper properties not configured. Nothing to announce.")
     }
-    log.ifDebug(announcement)
-    announcement
   }
 
   /**
@@ -152,62 +192,6 @@ abstract class GMFabricServer extends App {
     * @param rawBytes
     * @return
     */
-  def convertIpAddress(rawBytes: Array[Byte]) : String = {
-    rawBytes.map(n => n & 0xFF).mkString(".")
-  }
-
-  /**
-    *
-    * @param bound
-    * @param interfaceName
-    * @return
-    */
-  def getLocalAddressByName(bound: SocketAddress, interfaceName: String) : SocketAddress = {
-    val port = bound.asInstanceOf[InetSocketAddress].getPort
-    var addressOfInterest = None: Option[SocketAddress]
-    try {
-      val interface = NetworkInterface.getByName(interfaceName)
-      val addresses = interface.getInetAddresses
-      while (addresses.hasMoreElements) {
-        var addr = addresses.nextElement()
-        if (addr.isInstanceOf[Inet4Address] && !addr.isLoopbackAddress) {
-          addressOfInterest = Some(new InetSocketAddress(convertIpAddress(addr.getAddress), port))
-        }
-      }
-    }
-    catch {
-      case _ : Exception => None
-    }
-    addressOfInterest match {
-      case Some(_) => addressOfInterest.get
-      case None => new InetSocketAddress(InetAddress.getLoopbackAddress,port)
-    }
-  }
-
-  /**
-    * This traverses all available network interfaces and identifies an IPv4 interface that
-    * is NOT a loopback and returns the IP Address of it.
-    *
-    * @param bound
-    * @return
-    */
-  def locateAddress(bound: SocketAddress) : SocketAddress = {
-    val port = bound.asInstanceOf[InetSocketAddress].getPort
-    val interfaces = NetworkInterface.getNetworkInterfaces
-    var addressOfInterest = None: Option[SocketAddress]
-    while (interfaces.hasMoreElements) {
-      var addresses = interfaces.nextElement().getInetAddresses
-      while (addresses.hasMoreElements) {
-        var addr = addresses.nextElement()
-        if (addr.isInstanceOf[Inet4Address] && !addr.isLoopbackAddress) {
-          addressOfInterest = Some(new InetSocketAddress(convertIpAddress(addr.getAddress), port))
-        }
-      }
-    }
-    addressOfInterest match {
-      case Some(_) => addressOfInterest.get
-      case None => new InetSocketAddress(InetAddress.getLoopbackAddress,port)
-    }
-  }
+  def convertIpAddress(rawBytes: Array[Byte]) : String = rawBytes.map(n => n & 0xFF).mkString(".")
 
 }
