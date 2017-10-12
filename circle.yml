@@ -2,6 +2,10 @@ machine:
     java:
         version: oraclejdk8
 
+dependencies:
+    override:
+        - mvn package dependency:go-offline
+
 deployment:
     override:
         - if [ -z "${CI_PULL_REQUEST}" ]; then mvn deploy -P deploy -s settings.xml; fi

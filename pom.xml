@@ -25,6 +25,8 @@
     <modules>
         <module>core</module>
         <module>archetype</module>
+        <module>integration-setup</module>
+        <module>integration-verify</module>
     </modules>
 
     <licenses>
@@ -82,6 +84,10 @@
         <finatra.version>${version.twitter.finatra}</finatra.version>
         <version.finatra>${version.twitter.finatra}</version.finatra>
         <version.guice-injection>4.0</version.guice-injection>
+
+        <!--<version.zookeeper>3.5.0-alpha</version.zookeeper>-->
+        <version.httpclient>4.3.5</version.httpclient>
+        <version.httpcore>4.3.2</version.httpcore>
 
         <major.minor>0.1</major.minor>
 
