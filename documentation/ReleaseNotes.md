@@ -1,6 +1,19 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.0
+
+## Issue #55
+
+- Dockerized services announce container IP instead of host IP. 
+   Also required capability to override announcment ports.
+   
+   See [AnnounceAndBind](AnnounceAndBind.md)
+   
+## Issue #51
+
+- REST service doesn't announce IP to Zookeeper when using 'enableIpAddressResolution' parameters flag.
+
 ## gm-fabric-jvm-0.1.4
 
 ### Issue #42
