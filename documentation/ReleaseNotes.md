@@ -1,6 +1,10 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.1
+
+- Some files in 0.2.0 release did not get versioned correctly.
+
 ## gm-fabric-jvm-0.2.0
 
 ## Issue #55
