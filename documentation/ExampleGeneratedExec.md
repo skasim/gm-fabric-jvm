@@ -5,7 +5,7 @@ This document is a live example of roughly what you will see when you generate y
 
 ## Generation command
 
-    $ mvn archetype:generate -DarchetypeGroupId=com.deciphernow -DarchetypeArtifactId=gm-fabric-archetype -DarchetypeVersion=0.2.0
+    $ mvn archetype:generate -DarchetypeGroupId=com.deciphernow -DarchetypeArtifactId=gm-fabric-archetype -DarchetypeVersion=0.2.1
     
 ### Output generated
 
@@ -23,26 +23,26 @@ This document is a live example of roughly what you will see when you generate y
     [INFO] Generating project in Interactive mode
     [WARNING] Archetype not found in any catalog. Falling back to central repository (http://repo.maven.apache.org/maven2).
     [WARNING] Use -DarchetypeRepository=<your repository> if archetype's repository is elsewhere.
-    Downloading: http://repo.maven.apache.org/maven2/com/deciphernow/gm-fabric-archetype/0.2.0/maven-metadata.xml
+    Downloading: http://repo.maven.apache.org/maven2/com/deciphernow/gm-fabric-archetype/0.2.1/maven-metadata.xml
     
-    Downloading: http://repo.maven.apache.org/maven2/com/deciphernow/gm-fabric/0.2.0/maven-metadata.xml
+    Downloading: http://repo.maven.apache.org/maven2/com/deciphernow/gm-fabric/0.2.1/maven-metadata.xml
     
     Define value for property 'groupId': com.somepackage
     Define value for property 'artifactId': myfirstmicroservice
     [INFO] Using property: version = 0.1.0-SNAPSHOT
     Define value for property 'package' com.somepackage: : 
     Define value for property 'appName': MyFirstMicroservice
-    [INFO] Using property: serviceFrameworkVersion = 0.2.0
+    [INFO] Using property: serviceFrameworkVersion = 0.2.1
     Confirm properties configuration:
     groupId: com.somepackage
     artifactId: myfirstmicroservice
     version: 0.1.0-SNAPSHOT
     package: com.somepackage
     appName: MyFirstMicroservice
-    serviceFrameworkVersion: 0.2.0
+    serviceFrameworkVersion: 0.2.1
      Y: : Y
     [INFO] ----------------------------------------------------------------------------
-    [INFO] Using following parameters for creating project from Archetype: gm-fabric-archetype:0.2.0
+    [INFO] Using following parameters for creating project from Archetype: gm-fabric-archetype:0.2.1
     [INFO] ----------------------------------------------------------------------------
     [INFO] Parameter: groupId, Value: com.somepackage
     [INFO] Parameter: artifactId, Value: myfirstmicroservice
@@ -50,7 +50,7 @@ This document is a live example of roughly what you will see when you generate y
     [INFO] Parameter: package, Value: com.somepackage
     [INFO] Parameter: packageInPathFormat, Value: com/somepackage
     [INFO] Parameter: appName, Value: MyFirstMicroservice
-    [INFO] Parameter: serviceFrameworkVersion, Value: 0.2.0
+    [INFO] Parameter: serviceFrameworkVersion, Value: 0.2.1
     [INFO] Parameter: package, Value: com.somepackage
     [INFO] Parameter: version, Value: 0.1.0-SNAPSHOT
     [INFO] Parameter: groupId, Value: com.somepackage
@@ -318,7 +318,7 @@ This document is a live example of roughly what you will see when you generate y
     [INFO] Expanding: /home/user/.m2/repository/tanukisoft/wrapper-delta-pack/3.5.25/wrapper-delta-pack-3.5.25.tar.gz into /home/user/dev/workspaces/ms/myfirstmicroservice/server/target
     [INFO] 
     [INFO] --- appassembler-maven-plugin:1.9:generate-daemons (generate-jsw-scripts) @ myfirstmicroservice-server ---
-    [INFO] Installing artifact /home/user/.m2/repository/com/deciphernow/gm-fabric-core/0.2.0/gm-fabric-core-0.2.0.jar to /home/user/dev/workspaces/ms/myfirstmicroservice/server/target/appassembler/jsw/myfirstmicroservice-server/lib/gm-fabric-core-0.2.0.jar
+    [INFO] Installing artifact /home/user/.m2/repository/com/deciphernow/gm-fabric-core/0.2.1/gm-fabric-core-0.2.1.jar to /home/user/dev/workspaces/ms/myfirstmicroservice/server/target/appassembler/jsw/myfirstmicroservice-server/lib/gm-fabric-core-0.2.1.jar
     [INFO] Installing artifact /home/user/.m2/repository/com/twitter/util-logging_2.11/6.41.0/util-logging_2.11-6.41.0.jar to /home/user/dev/workspaces/ms/myfirstmicroservice/server/target/appassembler/jsw/myfirstmicroservice-server/lib/util-logging_2.11-6.41.0.jar
     [INFO] Installing artifact /home/user/.m2/repository/com/twitter/finatra-thrift_2.11/2.8.0/finatra-thrift_2.11-2.8.0.jar to /home/user/dev/workspaces/ms/myfirstmicroservice/server/target/appassembler/jsw/myfirstmicroservice-server/lib/finatra-thrift_2.11-2.8.0.jar
     [INFO] Installing artifact /home/user/.m2/repository/com/twitter/inject-thrift_2.11/2.8.0/inject-thrift_2.11-2.8.0.jar to /home/user/dev/workspaces/ms/myfirstmicroservice/server/target/appassembler/jsw/myfirstmicroservice-server/lib/inject-thrift_2.11-2.8.0.jar

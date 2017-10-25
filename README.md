@@ -19,7 +19,7 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 | server | REST and Thrift endpoints. |
 
 ## Latest release
-- [gm-fabric-jvm-0.2.0](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.0)
+- [gm-fabric-jvm-0.2.1](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.1)
 - [Release Notes:](documentation/ReleaseNotes.md)
 
 ## Prerequisite
