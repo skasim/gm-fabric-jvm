@@ -23,7 +23,11 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 - [Release Notes:](documentation/ReleaseNotes.md)
 
 ## Prerequisite
-You will need to install maven 3.3.x.
+You will need to install:
+
+- Maven 3.3.x.
+- Java 8
+- Scala 2.11.8
 
 ## How to do stuff
 The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a microservice.
