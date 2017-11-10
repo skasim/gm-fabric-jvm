@@ -1,0 +1,10 @@
+::: /tmp/report-16.txt:::
+Announce HOSTNAME=[Pickles]
+Announce adminPort=[25000]
+Announce httpPort=[5556]
+Announce httpsPort=[10001]
+Announce thriftPort=[9090]
+Bind adminPort=[:10002]
+Bind httpPort=[:10000]
+Bind httpsPort=[:10001]
+Bind thriftPort=[:9090]
