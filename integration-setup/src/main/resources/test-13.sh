@@ -59,7 +59,7 @@ rm -rf "${ANSWER_REPORT}" "${ERROR_REPORT}"
 #
 # ################################################################################################ #
 #
-scala -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
+java -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
     -Dcom.deciphernow.announcement.config.service.forward.hostname=Pickles \
     -Dcom.deciphernow.announcement.config.service.forward.adminPort=:5555 \
     -Dcom.deciphernow.announcement.config.service.forward.httpPort=:5556 \

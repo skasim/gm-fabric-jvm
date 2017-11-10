@@ -64,7 +64,7 @@ export ANNOUNCE_HTTP_PORT=:44445
 export BIND_ADMIN_PORT=:44446
 export BIND_HTTP_PORT=:44447
 export BIND_HOSTNAME=Not.Pickles
-scala -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
+java -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
     -Dcom.deciphernow.server.config.os.env.adminPort=BIND_ADMIN_PORT \
     -Dcom.deciphernow.server.config.os.env.httpPort=BIND_HTTP_PORT \
     -Dcom.deciphernow.server.config.os.env.hostname=BIND_HOSTNAME \

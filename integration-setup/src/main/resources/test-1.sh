@@ -59,7 +59,7 @@ rm -rf "${ANSWER_REPORT}" "${ERROR_REPORT}"
 #
 # ################################################################################################ #
 #
-scala -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
+java -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
     com.deciphernow.integration.TestEngine \
     ${ANSWER_REPORT} \
     ${ERROR_REPORT} \

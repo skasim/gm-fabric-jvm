@@ -60,7 +60,7 @@ rm -rf "${ANSWER_REPORT}" "${ERROR_REPORT}"
 # ################################################################################################ #
 #
 export BIND_ADMIN_PORT=33333
-scala -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
+java -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
     -Dcom.deciphernow.announcement.config.service.forward.httpPort=:5556 \
     -Dcom.deciphernow.server.config.os.env.adminPort=BIND_ADMIN_PORT \
     -Dcom.deciphernow.server.config.rest.httpPort=10000 \
