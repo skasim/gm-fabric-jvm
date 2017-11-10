@@ -61,7 +61,7 @@ rm -rf "${ANSWER_REPORT}" "${ERROR_REPORT}"
 #
 export ANNOUNCE_ADMIN_PORT=
 export ANNOUNCE_HTTP_PORT=
-scala -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
+java -classpath ${INTEGRATION_CLASSPATH}:${INTEGRATION_JAR}:. \
     -Dcom.deciphernow.announcement.config.os.env.adminPort=ANNOUNCE_ADMIN_PORT \
     -Dcom.deciphernow.announcement.config.os.env.httpPort=ANNOUNCE_HTTP_PORT \
     com.deciphernow.integration.TestEngine \

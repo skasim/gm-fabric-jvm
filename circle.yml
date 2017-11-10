@@ -4,7 +4,11 @@ machine:
 
 dependencies:
     override:
-        - mvn package dependency:go-offline
+        - mvn --projects archetype,core dependency:go-offline
+
+test:
+    override:
+        - mvn verify
 
 deployment:
     override:
