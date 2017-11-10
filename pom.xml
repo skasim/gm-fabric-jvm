@@ -24,6 +24,7 @@
 
     <modules>
         <module>core</module>
+        <module>cloudwatch</module>
         <module>archetype</module>
         <module>integration-setup</module>
         <module>integration-verify</module>
