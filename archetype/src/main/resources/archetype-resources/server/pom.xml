@@ -401,155 +401,100 @@
         <dependency>
             <groupId>com.deciphernow</groupId>
             <artifactId>gm-fabric-core</artifactId>
-            <version>${version.gm-fabric}</version>
         </dependency>
-
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${rootArtifactId}-model</artifactId>
-           <version>${symbol_dollar}{version}</version>
         </dependency>
-
         <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${rootArtifactId}-business</artifactId>
-            <version>${symbol_dollar}{version}</version>
        </dependency>
-
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-core_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.finagle}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-stats_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.finagle}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>util-core_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.util}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-thrift_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.finagle}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-serversets_${version.scala.major}</artifactId>
             <version>${symbol_dollar}{version.twitter.finagle}</version>
-            <scope>runtime</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-jdk14</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${symbol_dollar}{version.slf4j}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>${version.logback}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${symbol_dollar}{version.junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>${symbol_dollar}{version.scala}</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
-            <version>${symbol_dollar}{version.scala}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>twitter-server_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.server}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finatra-http_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.finatra}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>twitter-server_${version.scala.major}</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${symbol_dollar}{version.mockito}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-testlib</artifactId>
-            <version>${version.guice-injection}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>inject-core_${version.scala.major}</artifactId>
-            <version>${version.finatra}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>inject-modules_${version.scala.major}</artifactId>
-            <version>${version.finatra}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>inject-app_${version.scala.major}</artifactId>
-            <version>${version.finatra}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>inject-server_${version.scala.major}</artifactId>
-            <version>${version.finatra}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>twitter-server_${version.scala.major}</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper-delta-pack</artifactId>
-            <version>${symbol_dollar}{version.tanuki.wrapper}</version>
             <type>tar.gz</type>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
     

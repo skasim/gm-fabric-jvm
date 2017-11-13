@@ -52,15 +52,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${version.scala}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>${version.scala}</version>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-core</artifactId>
         </dependency>
     </dependencies>
-
 </project>

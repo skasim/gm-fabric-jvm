@@ -11,7 +11,7 @@ import ${package}.${appName}Manager
 class ${appName}RestController(manager: ${appName}Manager) extends Controller {
 
   // Keep this. Use to see if the service is accepting connections.
-  get("/ping") { request : Request =>
+  get("/ping") { _ : Request =>
     response.ok(manager.getPong()).toFuture
   }
 }

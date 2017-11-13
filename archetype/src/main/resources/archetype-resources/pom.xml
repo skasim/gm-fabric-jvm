@@ -8,21 +8,21 @@
         <version>${serviceFrameworkVersion}</version>
     </parent>
 
-    <properties>
-        <version.java.source>1.8</version.java.source>
-        <version.java.target>1.8</version.java.target>
+    <artifactId>${artifactId}</artifactId>
+    <groupId>${groupId}</groupId>
+    <version>${version}</version>
+    <packaging>pom</packaging>
 
+    <properties>
         <version.gm-fabric>${serviceFrameworkVersion}</version.gm-fabric>
 
-        <!-- Scala -->
-        <version.scala.major>2.11</version.scala.major>
-        <version.scala>${version.scala.major}.8</version.scala>
-        <version.scala.test>2.2.1</version.scala.test>
-        <version.typesafe.scala-logging>2.1.2</version.typesafe.scala-logging>
+        <version.java.source>1.8</version.java.source>
+        <version.java.target>1.8</version.java.target>
 
         <finatra.version>${version.twitter.finatra}</finatra.version>
         <version.finatra>${version.twitter.finatra}</version.finatra>
 
+        <version.project>${version}</version.project>
         <!--
           RPM version cannot have "-SNAPSHOT" && BuildNumber in it.
           Thus one has to manually update the version converting any '-' to '_'.
@@ -30,20 +30,159 @@
         <version.rpm>0.1.0_SNAPSHOT</version.rpm> <!-- This is used in 'server/pom.xml' -->
         <major.minor>0.1</major.minor>
 
-        <!-- Generic Logging -->
-        <version.logback>1.1.2</version.logback>
-        <version.slf4j>1.7.9</version.slf4j>
-        <version.log4j>1.2.15</version.log4j>
-
-        <!-- Testing -->
-        <version.junit>4.10</version.junit>
-        <version.mockito>1.9.5</version.mockito>
-
     </properties>
 
-    <artifactId>${artifactId}</artifactId>
-    <groupId>${groupId}</groupId>
-    <version>${version}</version>
-    <packaging>pom</packaging>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.deciphernow</groupId>
+                <artifactId>gm-fabric-core</artifactId>
+                <version>${version.gm-fabric}</version>
+            </dependency>
+            <dependency>
+                <groupId>${groupId}</groupId>
+                <artifactId>${rootArtifactId}-model</artifactId>
+                <version>${version.project}</version>
+            </dependency>
+            <dependency>
+                <groupId>${groupId}</groupId>
+                <artifactId>${rootArtifactId}-business</artifactId>
+                <version>${version.project}</version>
+            </dependency>
+            <dependency>
+                <groupId>${groupId}</groupId>
+                <artifactId>${rootArtifactId}-client</artifactId>
+                <version>${version.project}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>scrooge-core_${version.scala.major}</artifactId>
+                <version>${version.twitter.scrooge}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-core_${version.scala.major}</artifactId>
+                <version>${version.twitter.finagle}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-stats_${version.scala.major}</artifactId>
+                <version>${version.twitter.finagle}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>util-core_${version.scala.major}</artifactId>
+                <version>${version.twitter.util}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-thrift_${version.scala.major}</artifactId>
+                <version>${version.twitter.finagle}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-serversets_${version.scala.major}</artifactId>
+                <version>${version.twitter.finagle}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-jdk14</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${version.slf4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${version.logback}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${version.logback}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${version.scala}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-compiler</artifactId>
+                <version>${version.scala}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>twitter-server_${version.scala.major}</artifactId>
+                <version>${version.twitter.server}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finatra-http_${version.scala.major}</artifactId>
+                <version>${version.finatra}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${version.mockito}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.inject.extensions</groupId>
+                <artifactId>guice-testlib</artifactId>
+                <version>${version.guice-injection}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>inject-core_${version.scala.major}</artifactId>
+                <version>${version.finatra}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>inject-modules_${version.scala.major}</artifactId>
+                <version>${version.finatra}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>inject-app_${version.scala.major}</artifactId>
+                <version>${version.finatra}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>inject-server_${version.scala.major}</artifactId>
+                <version>${version.finatra}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tanukisoft</groupId>
+                <artifactId>wrapper-delta-pack</artifactId>
+                <version>${version.tanuki.wrapper}</version>
+                <type>tar.gz</type>
+                <scope>runtime</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

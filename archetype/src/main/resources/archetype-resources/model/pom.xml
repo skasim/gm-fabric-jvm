@@ -35,16 +35,10 @@
                 <version>${version.twitter.scrooge}</version>
                 <configuration>
                     <language>java</language>
-                    <!--<language>scala</language>-->
-                    <!--  default is scala  -->
                     <thriftOpts>
                         <!-- add other Scrooge command line options using thriftOpts -->
                         <thriftOpt>--finagle</thriftOpt>
                     </thriftOpts>
-                    <!-- tell scrooge to extract thrifts from these artifacts -->
-                    <!--dependencyIncludes>
-                        <include>thrift</include>
-                    </dependencyIncludes-->
                 </configuration>
                 <executions>
                     <execution>
@@ -70,12 +64,10 @@
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>scrooge-core_${version.scala.major}</artifactId>
-            <version>${version.twitter.scrooge}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-thrift_${version.scala.major}</artifactId>
-            <version>${version.twitter.finagle}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
