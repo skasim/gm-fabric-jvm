@@ -3,7 +3,7 @@
 This plugin enables the collection and publishing additional cloudwatch metrics for GM-Fabric-JVM services to AWS.
 
 ## Add to your project
-Add the following dependency to the sever pom.
+Add the following dependency to the __sever__ pom.
 
     <dependency>
         <groupId>com.deciphernow</groupId>
@@ -18,24 +18,24 @@ These properties can also be provided as a cli parameter.
 
 | Property Name | Default value | Optional? | Description |
 | --- | --- | --- | --- |
-| com.deciphernow.cloudwatch.period | 300 | yes | Interval, in seconds, between publishing metrics |
-| com.deciphernow.cloudwatch.region | us-east-1 | yes | AWS region |
-| com.deciphernow.cloudwatch.namespace | microservice | yes | namespace to publish to cloudwatch |
-| com.deciphernow.cloudwatch.metricNames | Set() | no | Set of metrics names, comma separated. See [list] |
-| com.deciphernow.cloudwatch.pidName | wrapper.java.pid | yes | The name of the running java process |
-| com.deciphernow.cloudwatch.serviceName | not-configured | yes | The name of the captured service metrics |
+| com.deciphernow.fabric.cloudwatch.period | 300 | yes | Interval, in seconds, between publishing metrics |
+| com.deciphernow.fabric.cloudwatch.region | us-east-1 | yes | AWS region |
+| com.deciphernow.fabric.cloudwatch.namespace | microservice | yes | namespace to publish to cloudwatch |
+| com.deciphernow.fabric.cloudwatch.metricNames | Set() | no | Set of metrics names, comma separated. See [list] |
+| com.deciphernow.fabric.cloudwatch.pidName | wrapper.java.pid | yes | The name of the running java process |
+| com.deciphernow.fabric.cloudwatch.serviceName | not-configured | yes | The name of the captured service metrics |
 
 ### Example parameters.config
 ---------------------
 ```
 # Just for testing. Use the default, 300 seconds, for production.
--com.deciphernow.cloudwatch.period=5
+-com.deciphernow.fabric.cloudwatch.period=5
 # Just for testing. Use the default, us-east-1, for development. Use the appropriate region for C2S.
--com.deciphernow.cloudwatch.region=us-west-1
+-com.deciphernow.fabric.cloudwatch.region=us-west-1
 # Several are listed just for testing. Pick 1 (or maybe 2) for production.
--com.deciphernow.cloudwatch.metricNames=process/cpu/percent,process/memory/mb,process/memory/percent,srv/load,srv/request_latency_ms.p90
--com.deciphernow.cloudwatch.serviceName=birds-api
--com.deciphernow.cloudwatch..pidName=birds
+-com.deciphernow.fabric.cloudwatch.metricNames=process/cpu/percent,process/memory/mb,process/memory/percent,srv/load,srv/request_latency_ms.p90
+-com.deciphernow.fabric.cloudwatch.serviceName=birds-api
+-com.deciphernow.fabric.cloudwatch.pidName=birds
 ```
 
 #### **Note:**

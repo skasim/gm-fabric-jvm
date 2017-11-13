@@ -86,6 +86,9 @@ trait FlagInitializationScheduler extends Logging {
   }
 }
 
+/**
+  * 
+  */
 class MetricsPublisher extends FlagInitializationScheduler {
 
   import MetricsPublisher._
@@ -137,7 +140,10 @@ class MetricsPublisher extends FlagInitializationScheduler {
   )).toString
 }
 
-object MetricsPublisher {
+/**
+  *
+  */
+object MetricsPublisher extends Logging {
 
   val processCpuPercent = "process/cpu/percent"
   val processMemoryKb = "process/memory/kb"
@@ -154,25 +160,31 @@ object MetricsPublisher {
     .filter(a => a.getValue != -1.0)
 
 
-  // obtain memory usage if available
-  def maybeMemory(implicit lastPublished: Date): Seq[MetricDatum] = {
-    // convenience function within the function
-    def md(key: String, value: String) = Metric(key, value.toDouble, lastPublished).asDatum
+  /**
+    * obtain memory usage if available
+    * @param lastPublished
+    * @return
+    */
+  def maybeMemory(implicit lastPublished: Date) : Seq[MetricDatum] = {
+    def md(key: String, value: Double) = Metric(key, value, lastPublished).asDatum
+    val heapUsage = ManagementFactory.getMemoryMXBean.getHeapMemoryUsage;
+    val max = Double.box(heapUsage.getMax).doubleValue
+    val used = Double.box(heapUsage.getUsed).doubleValue
+    logger.debug("processMemoryKb :: {} Percent Used :: {} ",used,((max - used) / max))
+    Seq(md(processMemoryKb,used), md(processMemoryPercent,((max - used) / max)))
+  }
 
-    try {
-      val pid = sys.props.get(pidName())
-      val lines = Seq("ps", "-p", pid.getOrElse("1000000"), "-o", "rss,%mem", "--no-headers").lineStream
-
-      lines.takeWhile(_ != null).flatMap { line =>
-        val stats = line.trim().split("\\s+")
-        stats.length match {
-          case 2 => Seq(md(processMemoryKb, stats(0)), md(processMemoryPercent, stats(1)))
-          case _ => Seq.empty
-        }
-      }
-    } catch {
-      case _: Exception =>
-        Seq.empty
+  /**
+    *
+    * @return
+    */
+  protected [this] def getPid = {
+    val processName = ManagementFactory.getRuntimeMXBean.getName
+    if (processName != null && processName.length > 0) {
+      processName.split("@")(0)
+    }
+    else {
+      0
     }
   }
 

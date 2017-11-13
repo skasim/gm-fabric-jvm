@@ -29,7 +29,7 @@ object namespace extends GlobalFlag[String]("microservice", "The namespace that 
 
 object metricNames extends GlobalFlag[Set[String]](Set("process/cpu/percent","process/memory/mb","process/memory/percent","srv/load","srv/request_latency_ms.p90"), "The names of the metrics to publish.")
 
-object pidName extends GlobalFlag[String]("wrapper.java.pid", "The name of the java process running on the instance")
+object pidName extends GlobalFlag[String]("microservice.pid", "The name of the java process running on the instance")
 
 object serviceName extends GlobalFlag[String]("not-configured","Should bee the name of the service metrics are being captured.")
 
