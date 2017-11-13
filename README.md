@@ -57,6 +57,10 @@ The various aspects of configuring a microservice.
 - [How to decrypt encrypted string resources.](documentation/ResourceDecrypter.md)
 - [How to configure the microservice framework on windows.](documentation/MicrosoftWindowsConfiguration.md)
 
+## Configuring metric plugins
+
+- [AWS: Capture metrics to be sent to AWS.](Cloudwatch-plugin.md)
+
 ## Filters
 How to configure filters and what they provide for your microservice.
 
