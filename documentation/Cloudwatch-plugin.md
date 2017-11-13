@@ -22,7 +22,6 @@ These properties can also be provided as a cli parameter.
 | com.deciphernow.fabric.cloudwatch.region | us-east-1 | yes | AWS region |
 | com.deciphernow.fabric.cloudwatch.namespace | microservice | yes | namespace to publish to cloudwatch |
 | com.deciphernow.fabric.cloudwatch.metricNames | Set() | no | Set of metrics names, comma separated. See [list] |
-| com.deciphernow.fabric.cloudwatch.pidName | wrapper.java.pid | yes | The name of the running java process |
 | com.deciphernow.fabric.cloudwatch.serviceName | not-configured | yes | The name of the captured service metrics |
 
 ### Example parameters.config
@@ -33,9 +32,8 @@ These properties can also be provided as a cli parameter.
 # Just for testing. Use the default, us-east-1, for development. Use the appropriate region for C2S.
 -com.deciphernow.fabric.cloudwatch.region=us-west-1
 # Several are listed just for testing. Pick 1 (or maybe 2) for production.
--com.deciphernow.fabric.cloudwatch.metricNames=process/cpu/percent,process/memory/mb,process/memory/percent,srv/load,srv/request_latency_ms.p90
+-com.deciphernow.fabric.cloudwatch.metricNames=process/cpu/percent,process/memory/kb,process/memory/percent,srv/load,srv/request_latency_ms.p90
 -com.deciphernow.fabric.cloudwatch.serviceName=birds-api
--com.deciphernow.fabric.cloudwatch.pidName=birds
 ```
 
 #### **Note:**

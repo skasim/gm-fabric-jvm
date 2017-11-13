@@ -63,7 +63,6 @@ trait FlagInitializationScheduler extends Logging {
              |Period: ${period()}
              |Metric Names: ${metricNames()}
              |Service Name: ${serviceName()}
-             |Pid: ${pidName()}
            """.stripMargin)
 
         val client = createClient
@@ -87,7 +86,7 @@ trait FlagInitializationScheduler extends Logging {
 }
 
 /**
-  * 
+  *
   */
 class MetricsPublisher extends FlagInitializationScheduler {
 
@@ -168,9 +167,9 @@ object MetricsPublisher extends Logging {
   def maybeMemory(implicit lastPublished: Date) : Seq[MetricDatum] = {
     def md(key: String, value: Double) = Metric(key, value, lastPublished).asDatum
     val heapUsage = ManagementFactory.getMemoryMXBean.getHeapMemoryUsage;
-    val max = Double.box(heapUsage.getMax).doubleValue
-    val used = Double.box(heapUsage.getUsed).doubleValue
-    logger.debug("processMemoryKb :: {} Percent Used :: {} ",used,((max - used) / max))
+    val max = Double.box(heapUsage.getMax).doubleValue / 1024
+    val used = Double.box(heapUsage.getUsed).doubleValue / 1024
+    logger.debug("WOMBAT :: processMemoryKb :: {} Percent Used :: {} ",used,((max - used) / max))
     Seq(md(processMemoryKb,used), md(processMemoryPercent,((max - used) / max)))
   }
 
@@ -178,7 +177,7 @@ object MetricsPublisher extends Logging {
     *
     * @return
     */
-  protected [this] def getPid = {
+  def getPid = {
     val processName = ManagementFactory.getRuntimeMXBean.getName
     if (processName != null && processName.length > 0) {
       processName.split("@")(0)
