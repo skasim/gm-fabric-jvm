@@ -59,7 +59,7 @@ The various aspects of configuring a microservice.
 
 ## Configuring metric plugins
 
-- [AWS: Capture metrics to be sent to AWS.](Cloudwatch-plugin.md)
+- [AWS: Capture metrics to be sent to AWS.](documentation/Cloudwatch-plugin.md)
 
 ## Filters
 How to configure filters and what they provide for your microservice.
