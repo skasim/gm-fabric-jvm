@@ -1,6 +1,32 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.2
+
+### Issue #80
+
+- Fixed cloudwatch plugin to acquire memory values though MXBean.
+
+### Issue #79
+
+- Enhanced dependency management.
+
+### Issue #77
+
+- Added documentation for cloudwatch plugin.
+
+### Issue #72
+
+- Updated integration tests to work with CircleCi.
+
+### Issue # 71
+
+- Migration of the cloudwatch plugin into this project.
+
+### Issue #67
+
+- Improved documentation with explicit requirements for local dev environment.
+
 ## gm-fabric-jvm-0.2.1
 
 - Some files in 0.2.0 release did not get versioned correctly.
