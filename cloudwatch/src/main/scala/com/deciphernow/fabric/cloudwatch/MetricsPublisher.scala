@@ -169,22 +169,9 @@ object MetricsPublisher extends Logging {
     val heapUsage = ManagementFactory.getMemoryMXBean.getHeapMemoryUsage;
     val max = Double.box(heapUsage.getMax).doubleValue / 1024
     val used = Double.box(heapUsage.getUsed).doubleValue / 1024
-    logger.debug("WOMBAT :: processMemoryKb :: {} Percent Used :: {} ",used,((max - used) / max))
-    Seq(md(processMemoryKb,used), md(processMemoryPercent,((max - used) / max)))
+    logger.debug("processMemoryKb :: {} Percent Used :: {} ",used,(used / max))
+    Seq(md(processMemoryKb,used), md(processMemoryPercent,(used / max)))
   }
 
-  /**
-    *
-    * @return
-    */
-  def getPid = {
-    val processName = ManagementFactory.getRuntimeMXBean.getName
-    if (processName != null && processName.length > 0) {
-      processName.split("@")(0)
-    }
-    else {
-      0
-    }
-  }
 
 }
