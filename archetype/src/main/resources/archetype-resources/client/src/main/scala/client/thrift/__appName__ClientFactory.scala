@@ -9,6 +9,9 @@ import javax.net.ssl.SSLContext
 import ${package}.thrift.${appName}
 import ${package}.thrift.${appName}.ServiceIface
 
+/**
+  *
+  */
 object ${appName}ClientFactory extends com.deciphernow.server.client.ThriftClientFactory {
 
   /**

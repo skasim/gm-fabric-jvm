@@ -18,7 +18,7 @@ package com.deciphernow.server
 
 import java.net.{Inet4Address, InetAddress, NetworkInterface}
 
-import com.deciphernow.server.{config => serverConfig}
+import com.deciphernow.server.{config => serverConfig, ConfigUtilities => CU}
 import com.deciphernow.announcement.{config => announcementConfig}
 import com.twitter.logging.Logger
 
@@ -171,21 +171,21 @@ object GMFNetworkConfigurationResolver {
     * @param value
     * @return
     */
-  def notNullOrBlank(value: String) = (value != null && !value.trim.isEmpty())
+  def notNullOrBlank(value: String) = CU.notNullOrBlank(value)
 
   /**
     *
     * @param values
     * @return
     */
-  protected [this] def pickValue(values: List[String]) : String = values.find(notNullOrBlank(_)).getOrElse("")
+  protected [this] def pickValue(values: List[String]) : String = CU.pickValue(values)
 
   /**
     * Retrieve the value from the environment variable. Return empty String if None.
     * @param env
     * @return
     */
-  protected [this] def envValue(env: Option[String]) = env.flatMap{value => sys.env.get(value)}.getOrElse("")
+  protected [this] def envValue(env: Option[String]) = CU.envValue(env)
 
 
   /**

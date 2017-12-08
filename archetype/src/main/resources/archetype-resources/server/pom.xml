@@ -11,9 +11,10 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>${artifactId}</artifactId>
     <packaging>jar</packaging>
-    
+
+    <name>${artifactId} [Server]</name>
+
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.tanuki.wrapper>3.5.25</version.tanuki.wrapper>
         
         <!-- Java Service Wrapper -->
@@ -29,315 +30,39 @@
     </properties>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${version.java.source}</source>
-                        <target>${version.java.target}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
-                    <revisionOnScmFailure>true</revisionOnScmFailure>
-                    <format>{0,number,&#35;&#35;&#35;&#35;&#35;}.{1,date,yyyyMMddHHmm}</format>
-                    <items>
-                        <item>buildNumber</item>
-                        <item>timestamp</item>
-                    </items>
-                </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>tanukisoft</groupId>
-                            <artifactId>wrapper-delta-pack</artifactId>
-                            <type>tar.gz</type>
-                            <outputDirectory>${symbol_dollar}{project.build.directory}</outputDirectory>
-                        </artifactItem>
-                    </artifactItems>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
-                <version>1.9</version>
-                <executions>
-                    <execution>
-                        <id>generate-jsw-scripts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate-daemons</goal>
-                        </goals>
-                        <configuration>
-                            <repositoryLayout>flat</repositoryLayout>
-                            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-                            <useWildcardClassPath>true</useWildcardClassPath>
-                            <target>${symbol_dollar}{project.build.directory}/appassembler</target>
-                            <daemons>
-                                <daemon>
-                                    <id>${symbol_dollar}{app.name}</id>
-                                    <wrapperMainClass>org.tanukisoftware.wrapper.WrapperSimpleApp</wrapperMainClass>
-                                    <mainClass>${package}.${appName}</mainClass>
-                                    <commandLineArguments>
-                                        <commandLineArgument></commandLineArgument>
-                                    </commandLineArguments>
-                                    <platforms>
-                                        <platform>jsw</platform>
-                                    </platforms>
-                                    <generatorConfigurations>
-                                        <generatorConfiguration>
-                                            <generator>jsw</generator>
-                                            <configuration>
-                                                <property>
-                                                    <!-- slight change in jsw versions.  this generates ../logs/ which is wrong now -->
-                                                    <name>wrapper.logfile</name>
-                                                    <value>logs/wrapper.log</value>
-                                                </property>
-                                                <property>
-                                                    <name>wrapper.app.parameter_file</name>
-                                                    <value>etc/parameters.config</value>
-                                                </property>
-                                                <property>
-                                                    <name>run.as.user.envvar</name>
-                                                    <value>${symbol_dollar}{app.runUser}</value>
-                                                </property>
-                                                <property>
-                                                    <name>configuration.directory.in.classpath.first</name>
-                                                    <value>etc</value>
-                                                </property>
-                                            </configuration>
-                                        </generatorConfiguration>
-                                    </generatorConfigurations>
-                                </daemon>
-                            </daemons>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.2</version>
-                <configuration>
-                    <descriptor>${symbol_dollar}{basedir}/src/main/assembly/bundle-app.xml</descriptor>
-                    <attach>false</attach>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <!-- see http://davidb.github.com/scala-maven-plugin -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <id>create-pre-install</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/package/rpm</directory>
-                                    <includes>
-                                        <include>pre_install.sh</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-post-install</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/package/rpm</directory>
-                                    <includes>
-                                        <include>post_install.sh</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-pre-remove</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/package/rpm</directory>
-                                    <includes>
-                                        <include>pre_remove.sh</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-post-remove</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/package/rpm</directory>
-                                    <includes>
-                                        <include>post_remove.sh</include>
-                                    </includes>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>rpm-maven-plugin</artifactId>
-                <version>2.1-alpha-4</version>
-                <configuration>
-                    <name>${app.name}-${major.minor}</name>
-                    <version>${rpm.version}</version>
-                    <release>${buildNumber}</release>
-                    <prefix>${rpm.basePath}</prefix>
-                    <sourceEncoding>UTF-8</sourceEncoding>
-                    <group>Applications/Engineering</group>
-                    <defaultDirmode>755</defaultDirmode>
-                    <defaultFilemode>644</defaultFilemode>
-                    <defaultUsername>${app.runUser}</defaultUsername>
-                    <defaultGroupname>${app.groupName}</defaultGroupname>
-                    <defineStatements>
-                        <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
-                        <defineStatement>_tmppath /tmp</defineStatement>
-                        <defineStatement>_binaries_in_noarch_packages_terminate_build 0</defineStatement>
-                        <defineStatement>_use_internal_dependency_generator 0</defineStatement>
-                        <defineStatement>__os_install_post %{nil}</defineStatement>
-                    </defineStatements>
-                    <targetOS>linux</targetOS>
-                    <needarch>noarch</needarch>
-                    <autoProvides>false</autoProvides>
-                    <autoRequires>false</autoRequires>
-                    <requires>
-                        <require>jre &gt;= 1.8</require>
-                        <require>initscripts</require>
-                    </requires>
-
-                    <preinstallScriptlet>
-                        <scriptFile>target/pre_install.sh</scriptFile>
-                    </preinstallScriptlet>
-
-                    <postinstallScriptlet>
-                        <scriptFile>target/post_install.sh</scriptFile>
-                    </postinstallScriptlet>
-
-                    <preremoveScriptlet>
-                        <scriptFile>target/pre_remove.sh</scriptFile>
-                    </preremoveScriptlet>
-
-                    <postremoveScriptlet>
-                        <scriptFile>target/post_remove.sh</scriptFile>
-                    </postremoveScriptlet>
-
-
-                    <mappings>
-                        <mapping>
-                            <directory>${rpm.basePath}/${app.name}-${major.minor}</directory>
-                            <filemode>775</filemode>
-                            <sources>
-                                <source>
-                                    <location>${project.build.directory}/${app.name}-${project.version}-app/${app.name}-${project.version}</location>
-                                    <includes>
-                                        <include>**/*</include>
-                                    </includes>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/etc/init.d</directory>
-                            <directoryIncluded>false</directoryIncluded>
-                            <sources>
-                                <softlinkSource>
-                                    <location>${rpm.basePath}/${app.name}-${major.minor}/bin/${app.name}</location>
-                                    <destination>${app.name}-${major.minor}</destination>
-                                </softlinkSource>
-                            </sources>
-                        </mapping>
-                    </mappings>
-                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
@@ -403,6 +128,10 @@
             <artifactId>gm-fabric-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-jvm-config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>${groupId}</groupId>
             <artifactId>${rootArtifactId}-model</artifactId>
         </dependency>
@@ -429,32 +158,6 @@
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-serversets_${version.scala.major}</artifactId>
-            <version>${symbol_dollar}{version.twitter.finagle}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
@@ -463,16 +166,6 @@
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finatra-http_${version.scala.major}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-testlib</artifactId>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
@@ -490,11 +183,89 @@
             <groupId>com.twitter</groupId>
             <artifactId>inject-server_${version.scala.major}</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+        </dependency>
         <dependency>
             <groupId>tanukisoft</groupId>
             <artifactId>wrapper-delta-pack</artifactId>
             <type>tar.gz</type>
+        </dependency>
+
+
+        <!-- Test Deps -->
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-testlib</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>finatra-http_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>inject-core_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>inject-modules_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>inject-app_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>inject-server_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>finatra-thrift_${version.scala.major}</artifactId>
+            <scope>test</scope>
+            <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${version.scala.major}</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     
@@ -507,7 +278,6 @@
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>rpm-maven-plugin</artifactId>
-                            <version>2.1-alpha-4</version>
                             <executions>
                                 <execution>
                                     <id>make-rpm</id>

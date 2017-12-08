@@ -45,7 +45,6 @@ package os.env {
 /**
   * Define the RESTful ports.
   */
-
 package rest {
 
   object httpPort  extends GlobalFlag[String](":8888", "HTTP Port")
@@ -69,8 +68,6 @@ package admin {
   */
 package thrift {
 
-  // shouldn't this be: GlobalFlag[String]?
-  //object port extends GlobalFlag(":9090", "Thrift Port")
   object port extends GlobalFlag[String](":9090", "Thrift Port")
 }
 

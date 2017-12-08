@@ -11,7 +11,7 @@
     <artifactId>${artifactId}</artifactId>
     <packaging>jar</packaging>
 
-    <name>${artifactId} [Business]</name>
+    <name>${artifactId} [Config]</name>
 
     <build>
         <plugins>
@@ -26,23 +26,16 @@
     <dependencies>
         <dependency>
             <groupId>com.deciphernow</groupId>
-            <artifactId>gm-fabric-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.deciphernow</groupId>
             <artifactId>gm-fabric-jvm-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${rootArtifactId}-model</artifactId>
+            <groupId>com.twitter</groupId>
+            <artifactId>finagle-core_${version.scala.major}</artifactId>
         </dependency>
         <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${rootArtifactId}-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${rootArtifactId}-config</artifactId>
+            <groupId>com.twitter</groupId>
+            <artifactId>finagle-serversets_${version.scala.major}</artifactId>
         </dependency>
     </dependencies>
+
 </project>

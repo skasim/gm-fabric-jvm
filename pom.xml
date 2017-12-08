@@ -18,7 +18,8 @@
     <artifactId>gm-fabric</artifactId>
     <version>0.2.3-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Microservice framework</name>
+
+    <name>Microservice framework [Root]</name>
     <description>A microservice framework for the JVM.</description>
     <url>https://github.com/deciphernow/gm-fabric-jvm</url>
 
@@ -28,6 +29,7 @@
         <module>archetype</module>
         <module>integration-setup</module>
         <module>integration-verify</module>
+        <module>config</module>
     </modules>
 
     <licenses>
@@ -72,7 +74,8 @@
         <!-- Scala -->
         <version.scala.major>2.11</version.scala.major>
         <version.scala>${version.scala.major}.8</version.scala>
-        <version.scala.test>2.2.1</version.scala.test>
+
+        <version.scala.test>3.0.0</version.scala.test>
         <version.scala.plugin>3.1.0</version.scala.plugin>
         <version.typesafe.scala-logging>2.1.2</version.typesafe.scala-logging>
 
@@ -86,11 +89,10 @@
         <version.finatra>${version.twitter.finatra}</version.finatra>
         <version.guice-injection>4.0</version.guice-injection>
 
-        <!--<version.zookeeper>3.5.0-alpha</version.zookeeper>-->
         <version.httpclient>4.3.5</version.httpclient>
         <version.httpcore>4.3.2</version.httpcore>
 
-        <major.minor>0.1</major.minor>
+        <!--<major.minor>0.1</major.minor>-->
 
         <!-- Generic Logging -->
         <version.logback>1.1.2</version.logback>
@@ -98,14 +100,38 @@
         <version.log4j>1.2.15</version.log4j>
 
         <!-- Testing -->
-        <version.junit>4.10</version.junit>
+        <version.junit>4.12</version.junit>
         <version.mockito>1.9.5</version.mockito>
+
+        <!-- Plugins -->
+        <version.scala-maven-plugin>3.1.0</version.scala-maven-plugin>
+
+        <version.maven-enforcer-plugin>3.0.0-M1</version.maven-enforcer-plugin>
+        <version.scalatest-maven-plugin>1.0</version.scalatest-maven-plugin>
+        <version.rpm-maven-plugin>2.1.5</version.rpm-maven-plugin>
+        <version.app-assembly-maven-plugin>1.10</version.app-assembly-maven-plugin>
+
+        <!-- todo: Figure out what replaces the 'descriptor' -->
+        <!--<version.maven-assembly-plugin>3.1.0</version.maven-assembly-plugin>-->
+        <version.maven-assembly-plugin>2.5.2</version.maven-assembly-plugin>
+
+        <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
+        <version.maven-dependency-plugin>2.9</version.maven-dependency-plugin>
+        <version.maven-antrun-plugin>1.8</version.maven-antrun-plugin>
+        <version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
+        <version.maven-resources-plugin>3.0.2</version.maven-resources-plugin>
+        <version.maven-archetype-packaging>3.0.1</version.maven-archetype-packaging>
+        <version.maven-archetype-plugin>${version.maven-archetype-packaging}</version.maven-archetype-plugin>
+
+        <!-- For compatability to possible previous references -->
+        <!-- TODO: assign the newly created consistent variable definitions to the poorly defined definitions. -->
 
         <!-- Deployment -->
         <version.bouncycastle.plugin>1.0.0</version.bouncycastle.plugin>
-        <version.javadoc.plugin>2.10.4</version.javadoc.plugin>
-        <version.source.plugin>3.0.1</version.source.plugin>
-        <version.vault.plugin>1.0.0</version.vault.plugin>
+        <version.maven-javadoc-plugin>3.0.0</version.maven-javadoc-plugin>
+        <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
+        <version.vault-plugin>1.0.0</version.vault-plugin>
+
     </properties>
 
     <repositories>
@@ -166,6 +192,51 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.deciphernow</groupId>
+                <artifactId>gm-fabric-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.deciphernow</groupId>
+                <artifactId>gm-fabric-jvm-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.deciphernow</groupId>
+                <artifactId>gm-fabric-core-integration-setup</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.deciphernow</groupId>
+                <artifactId>gm-fabric-core-integration-verify</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.scala-logging</groupId>
+                <artifactId>scala-logging-api_${version.scala.major}</artifactId>
+                <version>${version.typesafe.scala-logging}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.typesafe.scala-logging</groupId>
+                <artifactId>scala-logging-slf4j_${version.scala.major}</artifactId>
+                <version>${version.typesafe.scala-logging}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>util-logging_${version.scala.major}</artifactId>
+                <version>${version.twitter.util}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finatra-http_${version.scala.major}</artifactId>
+                <version>${version.twitter.finatra}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finatra-thrift_${version.scala.major}</artifactId>
+                <version>${version.twitter.finatra}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.twitter</groupId>
                 <artifactId>finagle-core_${version.scala.major}</artifactId>
                 <version>${version.twitter.finagle}</version>
@@ -199,6 +270,32 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>util-app_${version.scala.major}</artifactId>
+                <version>${version.twitter.util}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.twitter</groupId>
+                <artifactId>finagle-stats_${version.scala.major}</artifactId>
+                <version>${version.twitter.finagle}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${version.slf4j}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${version.httpclient}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${version.httpcore}</version>
+            </dependency>
+            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${version.log4j}</version>
@@ -209,11 +306,16 @@
                 <version>${version.slf4j}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
-                <scope>test</scope>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${version.logback}</version>
             </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${version.logback}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
@@ -234,12 +336,76 @@
                 <artifactId>twitter-server_${version.scala.major}</artifactId>
                 <version>${version.twitter.server}</version>
             </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${version.junit}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_${version.scala.major}</artifactId>
+                <version>${version.scala.test}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${version.maven-enforcer-plugin}</version>
+                    <configuration>
+                        <rules>
+                            <bannedPlugins>
+                                <level>WARN</level>
+                            </bannedPlugins>
+                            <requireReleaseDeps>
+                                <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
+                                <excludes>
+                                    <exclude>com.deciphernow:*</exclude>
+                                </excludes>
+                            </requireReleaseDeps>
+                            <dependencyConvergence/>
+                        </rules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.maven-dependency-plugin}</version>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.scalatest</groupId>
+                    <artifactId>scalatest-maven-plugin</artifactId>
+                    <version>${version.scalatest-maven-plugin}</version>
+                    <configuration>
+                        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>com.deciphernow</groupId>
                     <artifactId>bouncycastle-maven-plugin</artifactId>
@@ -262,7 +428,7 @@
                 <plugin>
                     <groupId>com.deciphernow</groupId>
                     <artifactId>vault-maven-plugin</artifactId>
-                    <version>${version.vault.plugin}</version>
+                    <version>${version.vault-plugin}</version>
                     <executions>
                         <execution>
                             <id>pull</id>
@@ -299,7 +465,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>${version.scala.plugin}</version>
+                    <version>${version.scala-maven-plugin}</version>
                     <executions>
                         <execution>
                             <id>scala-compile-first</id>
@@ -333,6 +499,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.maven-compiler-plugin}</version>
                     <configuration>
                         <source>${version.java.source}</source>
                         <target>${version.java.target}</target>
@@ -355,7 +522,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${version.source.plugin}</version>
+                    <version>${version.maven-source-plugin}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -365,6 +532,19 @@
                         </execution>
                     </executions>
                 </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-archetype-plugin</artifactId>
+                            <version>${version.maven-archetype-plugin}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <version>${version.maven-resources-plugin}</version>
+                            <configuration>
+                                <escapeString>\</escapeString>
+                            </configuration>
+                        </plugin>
             </plugins>
         </pluginManagement>
     </build>

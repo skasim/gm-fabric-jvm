@@ -13,9 +13,15 @@ import com.deciphernow.server.Implicits._
 
 import scala.concurrent.duration.Duration
 
+/**
+  *
+  */
 object ${appName} extends GMFabricServer {
 
-  val ${appName.substring(0,1).toLowerCase()}${appName.substring(1)}Manager = new ${appName}Manager
+  //
+  // All logic that requires parameters from 'Config' make sure to instantiate either as the last
+  // instantiations inside of 'premain' or instantiate right after 'premain'.
+  var ${appName.substring(0,1).toLowerCase()}${appName.substring(1)}Manager : ${appName}Manager = _
 
   // When using impersonating security filters, we need an access manager
   //var accessManager: FileWhitelistImpersonationAccessManager = _
@@ -23,12 +29,19 @@ object ${appName} extends GMFabricServer {
   // The access manager will require a whitelist file.  This is one way to use configuration for the file path
   //val whitelistFile = flag[File]("acl.whitelist.file", "ACL whitelist file for user impersonation")
 
-  // If we want to create the access manager, do it in the premain block like this.
-  // Note we need to do it outside the class body (in premain) because flag parsing occurrs later
   premain {
+
     //accessManager = new FileWhitelistImpersonationAccessManager(
     //   whitelistFile(), Duration(1, "minute")
     //)
+
+    //
+    // Decryptor plugin - retrieve instance here.
+    // val decryptor = DecryptorManager.getInstance
+
+    //
+    // Instantiate all business logic after the decryptor instantiation.
+    ${appName.substring(0,1).toLowerCase()}${appName.substring(1)}Manager = new ${appName}Manager
   }
 
   /*

@@ -15,7 +15,7 @@ You need to install the tanuki software service wrapper delta pack into your loc
 - Go to a location where you would like your ervice to be created at.
 - Create the microservice ( The example is based on master which is a work in progress. Set __archetypeVersion__ to the version of the release you are using.)
 
-    $ mvn archetype:generate -DarchetypeGroupId=com.deciphernow -DarchetypeArtifactId=gm-fabric-archetype -DarchetypeVersion=0.2.1
+    $ mvn archetype:generate -DarchetypeGroupId=com.deciphernow -DarchetypeArtifactId=gm-fabric-archetype -DarchetypeVersion=0.2.3
 
 Maven will prompt you for the following information:
 
@@ -54,6 +54,11 @@ The following module and directory structure is generated.
                 - java/com.somepackage
                 - scala/com.somepackage
                     - MyFirstMicroserviceManager.scala
+        - config
+            - pom.xml
+            - src/main
+                - scala/com.somepackage
+                    - Config.scala
         - client
             - pom.xml
             - src/main
@@ -147,21 +152,27 @@ In your browser hit the ping / pong endpoint:
 ### Out of the box, the generated microservice does not have SSL configured. 
 This makes for easy testing that the base structure was generated correctly.
 
-    package com.somepackage
+    package com.acme
     
     import java.io.File
     
-    import com.somepackage.rest.MyFirstMicroserviceRestController
-    import com.somepackage.thrift.MyFirstMicroserviceThriftService
+    import com.acme.rest.MyFirstMicroserviceRestController
+    import com.acme.thrift.MyFirstMicroserviceThriftService
+    
     import com.deciphernow.server.{GMFabricServer, RestServer, ThriftServer}
     import com.deciphernow.server.Implicits._
-    import com.deciphernow.server.filters.GenericUriStatsFilter
     
     import scala.concurrent.duration.Duration
     
+    /**
+      *
+      */
     object MyFirstMicroservice extends GMFabricServer {
     
-      val myFirstMicroserviceManager = new MyFirstMicroserviceManager
+      //
+      // All logic that requires parameters from 'Config' make sure to instantiate either as the last
+      // instantiations inside of 'premain' or instantiate right after 'premain'.
+      var myFirstMicroserviceManager : MyFirstMicroserviceManager = _
     
       // When using impersonating security filters, we need an access manager
       //var accessManager: FileWhitelistImpersonationAccessManager = _
@@ -169,12 +180,19 @@ This makes for easy testing that the base structure was generated correctly.
       // The access manager will require a whitelist file.  This is one way to use configuration for the file path
       //val whitelistFile = flag[File]("acl.whitelist.file", "ACL whitelist file for user impersonation")
     
-      // If we want to create the access manager, do it in the premain block like this.
-      // Note we need to do it outside the class body (in premain) because flag parsing occurrs later
       premain {
+    
         //accessManager = new FileWhitelistImpersonationAccessManager(
         //   whitelistFile(), Duration(1, "minute")
         //)
+    
+        //
+        // Decryptor plugin - retrieve instance here.
+        // val decryptor = DecryptorManager.getInstance
+    
+        //
+        // Instantiate all business logic after the decryptor instantiation.
+        myFirstMicroserviceManager = new MyFirstMicroserviceManager
       }
     
       /*
@@ -214,11 +232,17 @@ To see examples of implementation see __Microservice without SSL__ and __Microse
 # How to configure security
 See the following pages
 
+## Change configuration
+![Change port announcement](AnnounceAndBind.md)
+![Change other attributes](Parameters.md)
+
+### Other configuration
 ![To enable Two-way SSL](TwoWaySSL.md)
 
 ![To enable WhitelistClientFilter](WhitelistClientFilter.md)
 
 ![To enforce RESTful access ( AclRestFilter )](AclRestFilter.md)
+
 
 
 

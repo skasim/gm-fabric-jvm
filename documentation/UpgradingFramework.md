@@ -2,7 +2,7 @@
 This document identifies what has to be upgraded and what issues if any there are.
 
 ## Current Twitter Libraries
-These are current twitter library versions leveraged in the __gmf__.
+These are current twitter library versions leveraged in the __gm-fabric__.
 
     <version.twitter.scrooge>4.14.0</version.twitter.scrooge>
     <version.twitter.finagle>6.42.0</version.twitter.finagle>

@@ -1,6 +1,46 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.3
+
+* Key is that attributes can now be referenced across all modules. No need to include a separate set of properties to be loaded by a Java properties loader.
+* The ability to assign environment variable to all String based attributes.
+* Improved documentation.
+* RestController tests get generated in a microservice now.
+
+### Issue 101
+
+- Framework adds references to `core` && `config` to all modules of a generated service.
+
+### Issue #99
+
+- Parameters that are __String__ defined can be set by a system environment variable.
+
+### Issue #93/94
+
+- Document all changes to framework.
+
+### Issue #92
+
+- Update parameters.config to have all available parameters and documentation.
+
+### Issue #91
+
+- Add Unit Test to RestController in a generated microservice.
+
+### Issue #89
+
+- Fix plugin dependency management.
+
+### Issue #85
+
+- Remove post RPM install script.
+
+### Issue #84
+
+- Move Config out of core into it's own module called 'config'
+
+-------
 ## gm-fabric-jvm-0.2.2
 
 ### Issue #80
@@ -27,9 +67,13 @@
 
 - Improved documentation with explicit requirements for local dev environment.
 
+-------
+
 ## gm-fabric-jvm-0.2.1
 
 - Some files in 0.2.0 release did not get versioned correctly.
+
+-------
 
 ## gm-fabric-jvm-0.2.0
 
@@ -43,6 +87,8 @@
 ### Issue #51
 
 - REST service doesn't announce IP to Zookeeper when using 'enableIpAddressResolution' parameters flag.
+
+-------
 
 ## gm-fabric-jvm-0.1.4
 

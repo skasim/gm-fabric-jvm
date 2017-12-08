@@ -10,57 +10,27 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>${artifactId}</artifactId>
     <packaging>jar</packaging>
-    
-    <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+
+    <name>${artifactId} [Model]</name>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${version.java.source}</source>
-                        <target>${version.java.target}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.twitter</groupId>
                 <artifactId>scrooge-maven-plugin</artifactId>
-                <version>${version.twitter.scrooge}</version>
-                <configuration>
-                    <language>java</language>
-                    <thriftOpts>
-                        <!-- add other Scrooge command line options using thriftOpts -->
-                        <thriftOpt>--finagle</thriftOpt>
-                    </thriftOpts>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>thrift-sources</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>thrift-test-sources</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-jvm-config</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>scrooge-core_${version.scala.major}</artifactId>
