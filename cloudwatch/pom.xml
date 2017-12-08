@@ -26,7 +26,9 @@
         <version>0.2.3-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.deciphernow</groupId>
     <artifactId>gm-fabric-cloudwatch</artifactId>
+    <packaging>jar</packaging>
 
     <name>Microservice framework [CloudWatch Plugin]</name>
     <description>This project provides a plugin for pushing metrics to AWS CloudWatch.</description>
@@ -39,7 +41,6 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -49,17 +50,18 @@
         <dependency>
             <groupId>com.deciphernow</groupId>
             <artifactId>gm-fabric-core</artifactId>
-            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-jvm-config</artifactId>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>util-app_${version.scala.major}</artifactId>
-            <version>${version.twitter.util}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>util-core_${version.scala.major}</artifactId>
-            <version>${version.twitter.util}</version>
         </dependency>
     </dependencies>
 

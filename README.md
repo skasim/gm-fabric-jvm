@@ -15,19 +15,21 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 | -------| ----------- |
 | business | Shared business logic either written in scala or java. |
 | client | Thrift client and test coverage. |
+| config | Parameters to be leveraged across all modules. |
 | model | Thrift model. |
 | server | REST and Thrift endpoints. |
 
 ## Latest release
-- [gm-fabric-jvm-0.2.2](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.2)
+- [gm-fabric-jvm-0.2.3](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.3)
 - [Release Notes:](documentation/ReleaseNotes.md)
 
-## Prerequisite
+## Generic Prerequisite
 You will need to install:
 
 - Maven 3.3.x.
 - Java 8
 - Scala 2.11.8
+- rpm
 
 ## How to do stuff
 The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a microservice.
@@ -41,7 +43,6 @@ The various aspects of coding a microservice.
 - [How to add logging to my microservice.](documentation/Logging.md)
 - [Expanding thrift capabilities.](documentation/Thrift.md)
 - [How to write clients.](documentation/Clients.md)
-- [How to decrypt encrypted string resources.](documentation/ResourceDecrypter.md)
 - [Adding API documentation to your microservice.](documentation/APIDocumentation.md)
 - [How to build an RPM.](documentation/RPM.md)
 - [How to upgrade the microservice framework with new Twitter libraries.](documentation/UpgradingFramework.md)
@@ -57,7 +58,12 @@ The various aspects of configuring a microservice.
 - [How to decrypt encrypted string resources.](documentation/ResourceDecrypter.md)
 - [How to configure the microservice framework on windows.](documentation/MicrosoftWindowsConfiguration.md)
 
-## Configuring metric plugins
+#### Adding parameters
+
+- [Adding your own parameters](documentation/Config.md)
+- [What and where to configure](documentation/Parameters.md)
+
+#### Configuring metric plugins
 
 - [AWS: Capture metrics to be sent to AWS.](documentation/Cloudwatch-plugin.md)
 
@@ -68,12 +74,15 @@ How to configure filters and what they provide for your microservice.
 - [How to capture metrics for dynamic URI's (GenericUriStatsFilter) ](documentation/GenericUriStatsFilter.md)
 - [How to control impersonation access to the microservice (WhitelistClientFilter).](documentation/WhitelistClientFilter.md)
 
-
 ## Administration
 How to administer your microservice.
 
 - [How to administer the microservice.](documentation/Admin.md)
 
 ## Known issues
+
 - [Known issues.](documentation/Issues.md)
+
+## License
+- [](LICENSE.txt)
 

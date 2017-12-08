@@ -1,5 +1,5 @@
 # Overview
-The following parameters can be configured in the `etc/parameters.config` file.
+The following parameters can be configured in the `etc/parameters.config` file. To create your own attributes and adding them to __parameters.config__ ![see](Config.md).
 
 ## White-list Enforcement File
 This points to the file that identifies the services that are allowed to access and perform impersonation.
@@ -59,3 +59,33 @@ If `enableIpAddressResolution` is true and no ethernet interface name assigned t
 The framework auto-magically understands how to create the StatsReceiver for the static route. No need to create it.
    
     -com.deciphernow.server.config.staticRoutes.ignore=/ping
+
+## Assigning ENVIRONMENT variables
+For all attributes that are of type __String__ an ENVIRONMENT variable may be defined as in __Example 1__.
+
+Example 1
+
+    -com.deciphernow.server.config.zk.announcementPoint=ENV_ZK_ANNOUNCE
+    
+To retrieve the value assigned to the __zk.announcementPoint__ you would do the following ([based having followed](CreatingNewMS.md)):
+
+
+    package com.acme
+    
+    import com.deciphernow.server.ConfigUtilities
+    
+    /**
+     *
+     */
+    class MyFirstMicroserviceManager {
+    
+      /**
+        * Keep this. Use to see if the service is accepting connections.
+        * @return
+        */
+      def getPong = {
+        val ap = ConfigUtilities.selectValue(com.deciphernow.server.config.zk.announcementPoint.apply))
+        "pong\n"
+      }
+    
+    }

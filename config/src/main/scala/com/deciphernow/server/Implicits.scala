@@ -1,6 +1,5 @@
 package com.deciphernow.server
 
-
 /*
     Copyright 2017 Decipher Technology Studios LLC
 

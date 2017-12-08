@@ -8,6 +8,10 @@ package ${package}
  */
 class ${appName}Manager {
 
-  // Keep this. Use to see if the service is accepting connections.
-  def getPong() = "pong\n"
+  /**
+    * Keep this. Use to see if the service is accepting connections.
+    * @return
+    */
+  def getPong = "pong\n"
+
 }

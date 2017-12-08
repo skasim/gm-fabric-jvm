@@ -22,14 +22,10 @@
         <version>0.2.3-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.deciphernow</groupId>
     <artifactId>gm-fabric-core-integration-verify</artifactId>
     <packaging>jar</packaging>
     <name>Microservice framework [Core-Integration-Verify]</name>
-
-    <properties>
-        <version.scala.plugin>3.1.0</version.scala.plugin>
-        <version.enforcer.plugin>1.4.1</version.enforcer.plugin>
-    </properties>
 
     <build>
         <plugins>
@@ -37,185 +33,95 @@
                 <!-- see http://davidb.github.com/scala-maven-plugin -->
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>${version.scala.plugin}</version>
-                <executions>
-                    <execution>
-                        <id>scala-compile-first</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>scala-test-compile</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
-
     </build>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.deciphernow</groupId>
-            <artifactId>gm-fabric-core-integration-setup</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.deciphernow</groupId>-->
+            <!--<artifactId>gm-fabric-core-integration-setup</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.deciphernow</groupId>
             <artifactId>gm-fabric-core</artifactId>
-            <version>${parent.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-jvm-config</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-core_${version.scala.major}</artifactId>
-            <version>${version.twitter.finagle}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-stats_${version.scala.major}</artifactId>
-            <version>${version.twitter.finagle}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>util-core_${version.scala.major}</artifactId>
-            <version>${version.twitter.util}</version>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-thrift_${version.scala.major}</artifactId>
-            <version>${version.twitter.finagle}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.twitter</groupId>
             <artifactId>finagle-serversets_${version.scala.major}</artifactId>
-            <version>${version.twitter.finagle}</version>
             <scope>runtime</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-jdk14</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${version.slf4j}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>${version.logback}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
         </dependency>
         <dependency>
-            <groupId>com.deciphernow</groupId>
-            <artifactId>gm-fabric-core-integration-setup</artifactId>
-            <version>${parent.version}</version>
-            <scope>test</scope>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-compiler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>twitter-server_${version.scala.major}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>finatra-http_${version.scala.major}</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>com.deciphernow</groupId>
+            <artifactId>gm-fabric-core-integration-setup</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${version.scala.major}</artifactId>
-            <version>${version.scala.test}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${version.logback}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${version.logback}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${version.junit}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${version.scala}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>${version.scala}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter</groupId>
-            <artifactId>twitter-server_${version.scala.major}</artifactId>
-            <version>${version.twitter.server}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.twitter</groupId>
-            <artifactId>finatra-http_${version.scala.major}</artifactId>
-            <version>${version.finatra}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.twitter</groupId>
-                    <artifactId>twitter-server_${version.scala.major}</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

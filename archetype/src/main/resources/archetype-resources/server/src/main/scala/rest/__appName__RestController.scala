@@ -8,10 +8,15 @@ import com.twitter.finatra.http.Controller
 
 import ${package}.${appName}Manager
 
+/**
+  *
+  */
 class ${appName}RestController(manager: ${appName}Manager) extends Controller {
 
-  // Keep this. Use to see if the service is accepting connections.
+  /**
+    * Keep this. Use to see if the service is accepting connections.
+    */
   get("/ping") { _ : Request =>
-    response.ok(manager.getPong()).toFuture
+    response.ok(manager.getPong).toFuture
   }
 }

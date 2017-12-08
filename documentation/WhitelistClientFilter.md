@@ -15,7 +15,7 @@ This filter is the gatekeeper in allowing services to access the service through
 
 - Go to __some-microservice/server/src/main/package/etc__ and create a file called __accessControlList.txt__ ( The name can be whatever you want it to be )
 - Within the __accessControlList.txt__ add the __PKI__ certificate DNs that are able to access this service.
-- Edit __some-microservice/server/src/main/package/etc/parameters.config__
+- Edit __some-microservice/server/src/main/package/etc/parameters.config__ ![See](Config.md)
 
 Add:
 
@@ -24,52 +24,69 @@ Add:
 
 Update the service class to enable ACL. This example below enables the AclRestFilter to enforce ACL at REST. See [AclRestFilter](AclRestFilter.md) documentation to understand what it is doing.
 
-     package com.example
-     
-     import java.io.File
-     
-     import com.example.rest.MyFirstMicroserviceRestController
-     import com.example.thrift.MyFirstMicroserviceThriftService
-     import com.deciphernow.server.security._
-     import com.deciphernow.server.{GMFabricServer, RestServer, ThriftServer}
-     import com.deciphernow.server.rest.RestServer
-     import com.deciphernow.server.thrift.ThriftServer
-     import com.deciphernow.server.Implicits._
-     
-     import scala.concurrent.duration.Duration
-     
-     object SomeMicroservice extends GMFabricServer {
-     
-           val myFirstMicroserviceManager = new MyFirstMicroserviceManager
-         
-           // When using impersonating security filters, we need an access manager
-           var accessManager: FileWhitelistImpersonationAccessManager = _
-           // The access manager will require a whitelist file.  This is one way to use configuration for the file path
-           val whitelistFile = flag[File]("acl.whitelist.file", "ACL whitelist file for user impersonation")
-         
-           premain {
-             // If we want to create the access manager, do it in the premain block like this.
-             // Note we need to do it outside the class body (in premain) because flag parsing occurrs later
-             accessManager = new FileWhitelistImpersonationAccessManager(
-                whitelistFile(), Duration(1, "minute")
-             )
-           }
-         
-           def thrift = Some(new ThriftServer(
-             Seq(new WhitelistClientFilter(accessManager)),
-             new MyFirstMicroserviceThriftService(myFirstMicroserviceManager)
-           ))
-         
-           /*
-                Filters, Controllers
-            */
-           def rest = Some(new RestServer(
-             Seq(new AclRestFilter(accessManager)),
-             Seq(new MyFirstMicroserviceRestController(myFirstMicroserviceManager))
-           ))
-     }
-
-    
+      package com.acme
+      
+      import java.io.File
+      
+      import com.acme.rest.MyFirstMicroserviceRestController
+      import com.acme.thrift.MyFirstMicroserviceThriftService
+      
+      import com.deciphernow.server.{GMFabricServer, RestServer, ThriftServer}
+      import com.deciphernow.server.Implicits._
+      
+      import scala.concurrent.duration.Duration
+      
+      /**
+        *
+        */
+      object MyFirstMicroservice extends GMFabricServer {
+      
+        //
+        // All logic that requires parameters from 'Config' make sure to instantiate either as the last
+        // instantiations inside of 'premain' or instantiate right after 'premain'.
+        var myFirstMicroserviceManager : MyFirstMicroserviceManager = _
+      
+        // When using impersonating security filters, we need an access manager
+        var accessManager: FileWhitelistImpersonationAccessManager = _
+      
+        // The access manager will require a whitelist file.  This is one way to use configuration for the file path
+        val whitelistFile = flag[File]("acl.whitelist.file", "ACL whitelist file for user impersonation")
+      
+        premain {
+      
+          accessManager = new FileWhitelistImpersonationAccessManager(
+             whitelistFile(), Duration(1, "minute")
+          )
+      
+          //
+          // Decryptor plugin - retrieve instance here.
+          // val decryptor = DecryptorManager.getInstance
+      
+          //
+          // Instantiate all business logic after the decryptor instantiation.
+          myFirstMicroserviceManager = new MyFirstMicroserviceManager
+        }
+      
+        /*
+          Assign None to server if no server is going to be defined.
+          def thrift = None
+         */
+        def thrift = Some(new ThriftServer(
+          Seq(new WhitelistClientFilter(accessManager)),
+          new MyFirstMicroserviceThriftService(myFirstMicroserviceManager)
+        ))
+      
+        /*
+          A rest server is always required since the admin server is
+          instantiated here.
+       */
+        def rest = Some(new RestServer(
+          Seq(new AclRestFilter(accessManager)),
+          Seq(new MyFirstMicroserviceRestController(myFirstMicroserviceManager))
+        ))
+      
+      }
+  
     
 ### Testing the service
 
@@ -77,7 +94,7 @@ Start the MS and echo logs to the terminal
 
     $ cd my-first-microservice
     $ mvn clean package
-    $ cd server/target/some-microservice-1.0.0-SNAPSHOT-app/some-microservice-1.0.0-SNAPSHOT
+    $ cd server/target/some-microservice-0.1.0-SNAPSHOT-app/some-microservice-0.1.0-SNAPSHOT
     $ bin/some-microservice console
 
 ## Verify ACL is working

@@ -5,6 +5,10 @@ package ${package}.thrift;
 
 import com.twitter.util.Future;
 import ${package}.${appName}Manager;
+
+/**
+ *
+ */
 public class ${appName}ThriftService implements ${appName}.ServiceIface {
     private ${appName}Manager manager;
 
