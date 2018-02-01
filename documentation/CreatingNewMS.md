@@ -8,7 +8,7 @@ You need to install the tanuki software service wrapper delta pack into your loc
 
     $ mkdir -p ~/.m2/repository/tanukisoft/wrapper-delta-pack/3.5.25
     $ cd ~/.m2/repository/tanukisoft/wrapper-delta-pack/3.5.25 
-    $ curl -XGET https://wrapper.tanukisoftware.com/download/3.5.25/wrapper-delta-pack-3.5.25.tar.gz > wrapper-delta-pack-3.5.25.tar.gz
+    $ curl -L https://download.tanukisoftware.com/wrapper/3.5.25/wrapper-delta-pack-3.5.25.tar.gz > wrapper-delta-pack-3.5.25.tar.gz
 
 ## Getting started.
 - Open a terminal.
