@@ -21,9 +21,10 @@ import java.net.InetSocketAddress
 
 import com.twitter.finagle.http.{Method, Request, Response, Version}
 import org.jboss.netty.handler.codec.http._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-
-
+@RunWith(classOf[JUnitRunner])
 class MockRequest extends Request {
    val httpRequest: HttpRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/")
    override val httpMessage: HttpMessage = httpRequest

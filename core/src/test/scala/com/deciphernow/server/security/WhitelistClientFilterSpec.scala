@@ -19,7 +19,9 @@ package com.deciphernow.server.security
 
 import com.twitter.finagle.Service
 import com.twitter.util.{Await, Future}
+import org.junit.runner.RunWith
 import org.scalatest._
+import org.scalatest.junit.JUnitRunner
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +29,7 @@ import org.scalatest._
  * Date: 1/27/15
  * Time: 11:52 AM
  */
+@RunWith(classOf[JUnitRunner])
 class WhitelistClientFilterSpec extends FlatSpec with Matchers {
 
   val accessManager = new SimpleAccessManager {

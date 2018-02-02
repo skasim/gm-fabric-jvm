@@ -17,11 +17,14 @@ package com.deciphernow.server.support
     limitations under the License.
 */
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by ghershfield on 6/8/16.
   */
+@RunWith(classOf[JUnitRunner])
 class NoDecryptorSpec extends FlatSpec with Matchers {
 
   "Given a string" should " return the same string" in {

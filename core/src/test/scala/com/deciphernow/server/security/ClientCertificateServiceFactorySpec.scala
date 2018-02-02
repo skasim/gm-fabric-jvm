@@ -22,25 +22,29 @@ import java.math.BigInteger
 import java.net.{InetSocketAddress, SocketAddress}
 import java.security.{Principal, PublicKey}
 import java.util.Date
-import javax.net.ssl.{SSLEngine, SSLContext}
+import javax.net.ssl.{SSLContext, SSLEngine}
 import javax.security.cert.X509Certificate
+
 import com.deciphernow.server.security.support.{CertificateDNHelperFilter, Hello}
 import com.deciphernow.server.security.support.Hello.FutureIface
 import com.deciphernow.server.thrift.ThriftUtil
 import com.deciphernow.server.tls.TlsConfigUtil
-import com.twitter.finagle.ssl.{Ssl, Engine}
+import com.twitter.finagle.ssl.{Engine, Ssl}
 import com.twitter.finagle.thrift.Protocols
 import com.twitter.finagle.transport.Transport
-import com.twitter.finagle.{Thrift, ClientConnection, Service}
-import com.twitter.util.{Await, Time, Future}
+import com.twitter.finagle.{ClientConnection, Service, Thrift}
+import com.twitter.util.{Await, Future, Time}
 import Hello.FutureIface
-import org.scalatest.{Matchers, FlatSpec}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 import scala.io.Source
 
 /**
   *
   */
+@RunWith(classOf[JUnitRunner])
 class ClientCertificateServiceFactorySpec extends FlatSpec with Matchers {
 
   val service = new Service[String, Option[UserAuthentication]] {

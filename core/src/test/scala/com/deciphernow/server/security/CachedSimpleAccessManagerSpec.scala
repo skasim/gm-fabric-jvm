@@ -17,7 +17,9 @@ package com.deciphernow.server.security
     limitations under the License.
 */
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.duration._
 
@@ -27,6 +29,7 @@ import scala.concurrent.duration._
  * Date: 1/27/15
  * Time: 7:47 PM
  */
+@RunWith(classOf[JUnitRunner])
 class CachedSimpleAccessManagerSpec extends FlatSpec with Matchers {
   val manager = new CachedSimpleAccessManager(2 seconds) {
     var whitelist: Set[String] = Set.empty
