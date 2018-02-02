@@ -27,8 +27,6 @@
         <module>core</module>
         <module>cloudwatch</module>
         <module>archetype</module>
-        <module>integration-setup</module>
-        <module>integration-verify</module>
         <module>config</module>
     </modules>
 
@@ -532,8 +530,8 @@
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <runOrder>${maven.test.runOrder}</runOrder>
                         <includes>
-                            <include>**/IntTest*.class</include>
-                            <include>**/IntSpec*.class</include>
+                            <include>**/IntTest*</include>
+                            <include>**/IntSpec*</include>
                         </includes>
                     </configuration>
                 </plugin>
@@ -545,8 +543,8 @@
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <runOrder>${maven.test.runOrder}</runOrder>
                         <includes>
-                            <include>**/*Test.class</include>
-                            <include>**/*Spec.class</include>
+                            <include>**/*Test</include>
+                            <include>**/*Spec</include>
                         </includes>
                     </configuration>
                 </plugin>
