@@ -19,9 +19,11 @@ package com.deciphernow.server.security
 
 import java.io.{File, PrintWriter}
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
-
+@RunWith(classOf[JUnitRunner])
 class FileWhitelistImpersonationAccessManagerSpec extends FlatSpec with Matchers {
 
   val tempFile: File = createTempAuthFile()

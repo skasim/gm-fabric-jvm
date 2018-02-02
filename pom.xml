@@ -100,8 +100,11 @@
         <version.log4j>1.2.15</version.log4j>
 
         <!-- Testing -->
+        <maven.test.runOrder>hourly</maven.test.runOrder>
         <version.junit>4.12</version.junit>
         <version.mockito>1.9.5</version.mockito>
+        <version.surefire.plugin>2.20.1</version.surefire.plugin>
+        <version.failsafe.plugin>${version.surefire.plugin}</version.failsafe.plugin>
 
         <!-- Plugins -->
         <version.scala-maven-plugin>3.1.0</version.scala-maven-plugin>
@@ -503,6 +506,48 @@
                     <configuration>
                         <source>${version.java.source}</source>
                         <target>${version.java.target}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${version.failsafe.plugin}</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <phase>integration-test</phase>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>verify</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        <runOrder>${maven.test.runOrder}</runOrder>
+                        <includes>
+                            <include>**/IntTest*.class</include>
+                            <include>**/IntSpec*.class</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                    <configuration>
+                        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        <runOrder>${maven.test.runOrder}</runOrder>
+                        <includes>
+                            <include>**/*Test.class</include>
+                            <include>**/*Spec.class</include>
+                        </includes>
                     </configuration>
                 </plugin>
                 <plugin>

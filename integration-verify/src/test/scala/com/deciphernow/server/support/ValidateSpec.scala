@@ -1,6 +1,10 @@
 package com.deciphernow.server.support
 
 import java.io.File
+
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
 import scala.io.Source
 import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 
@@ -23,6 +27,7 @@ import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 /**
   *
   */
+@RunWith(classOf[JUnitRunner])
 class ValidateSpec extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   val reportNames: Seq[String] = (1 until 19).map(index => s"report-${index}.txt")
