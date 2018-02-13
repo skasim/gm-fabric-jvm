@@ -4,7 +4,7 @@ machine:
 
 dependencies:
     override:
-        - mvn --projects archetype,config,core dependency:go-offline
+        - mvn install
 
 test:
     override:
