@@ -1,5 +1,5 @@
 # Overview
-This documentation talks to how to add aglio to your microservice project. Realize that the microservice framework does not come prepackaged with a documentation generator tool. It is up to the developer to add it to their explicit project.
+This documentation describes how to add aglio to your microservice project. Realize that the microservice framework does not come prepackaged with a documentation generator tool. It is up to the developer to add it to their explicit project.
 
 ## Base documentation 
 The pattern is to define three explicit files, __home.md__, __rest.md__ and __thrift.md__. Add two directories to the __server__ project, __src/main/apiblueprint/resources__ for source documentation files and __src/main/apiblueprint/scripts__ for shell scripts to be called by __maven__. More document files may be added, but at minimum the pattern is to have these three files in your microservice.
@@ -149,7 +149,7 @@ If the RESTful routes are explicit then a wildcard route may be used to request 
         response.ok.file("/public"+realpath)
     }
 
-If the RESTful routes to the service are wildcarded then there is a conflict between service fullfilment and documentation requests. The following changes have to be made to request the documentation.
+If the RESTful routes to the service are wildcarded then there is a conflict between service fullfillment and documentation requests. The following changes have to be made to request the documentation.
 
 - Allow the user not to know the landing page, __home.html__.
 

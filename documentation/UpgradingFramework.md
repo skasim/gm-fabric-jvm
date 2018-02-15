@@ -10,7 +10,7 @@ These are current twitter library versions leveraged in the __gm-fabric__.
     <version.twitter.server>1.27.0</version.twitter.server>
     <version.twitter.finatra>2.8.0</version.twitter.finatra>
 
-The thrift version is a special version explicitly modified by Twitter. It can be acquired from here: http://maven.twttr.com/
+The Thrift version is a special version explicitly modified by Twitter. It can be acquired from here: http://maven.twttr.com/
 
 
 ## Microservice Framework code gotcha:

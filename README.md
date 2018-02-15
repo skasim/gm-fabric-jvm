@@ -5,7 +5,7 @@ This product is a microservice framework for the JVM and is intended to be built
 # gm-fabric-jvm ( gmf )
 ---
 
-This project is built on top of Twitters Finagle and Finatra libraries. The core functionality resides in finagle-core and finatra-http and has been abstracted from the developer.
+This project is built on top of Twitter's [Finagle](https://github.com/twitter/finagle) and [Finatra](https://github.com/twitter/finatra) libraries. The core functionality resides in finagle-core and finatra-http and has been abstracted from the developer.
 
 This project has two modules core and archetype. The core module has the underlying business logic that abstracts the Thrift and RESTful capabilities from the developer. The archetype module is used to build out a microservice.
 

@@ -13,15 +13,15 @@ Configure the admin port. The default value is __:9990__.
 
     -com.deciphernow.server.config.admin.port=:10000
     
-Configure the http port. The default value is __:8888__.
+Configure the HTTP port. The default value is __:8888__.
 
     -com.deciphernow.server.config.rest.httpPort=:20000
     
-Configure the https port. The default value is __:8999__.
+Configure the HTTPS port. The default value is __:8999__.
 
     -com.deciphernow.server.config.rest.httpsPort=:20001
     
-Configure the thrift port. The default value is __:9090__.
+Configure the Thrift port. The default value is __:9090__.
 
     -com.deciphernow.server.config.thrift.port=:30000
     
@@ -36,15 +36,15 @@ Point to the environment variable defining the admin port. The default value is 
 
     -com.deciphernow.server.config.os.env.adminPort
      
-Point to the environment variable defining the http port. The default value is __None__. This overrides __-com.deciphernow.server.config.rest.httpPort__ only if ENV is defined with a value.
+Point to the environment variable defining the HTTP port. The default value is __None__. This overrides __-com.deciphernow.server.config.rest.httpPort__ only if ENV is defined with a value.
 
     -com.deciphernow.server.config.os.env.httpPort
     
-Point to the environment variable defining the https port. The default value is __None__. This overrides __-com.deciphernow.server.config.rest.httpsPort__ only if ENV is defined with a value.
+Point to the environment variable defining the HTTPS port. The default value is __None__. This overrides __-com.deciphernow.server.config.rest.httpsPort__ only if ENV is defined with a value.
 
     -com.deciphernow.server.config.os.env.httpsPort
     
-Point to the environment variable defining the thrift port. The default value is __None__. This overrides __-com.deciphernow.server.config.thrift.port__ only if ENV is defined with a value.
+Point to the environment variable defining the Thrift port. The default value is __None__. This overrides __-com.deciphernow.server.config.thrift.port__ only if ENV is defined with a value.
 
     -com.deciphernow.server.config.os.env.thriftPort 
 

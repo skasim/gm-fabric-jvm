@@ -25,7 +25,7 @@ In the server, when defining the RestfulServer, you would instantiate this filte
             Seq(new MyWombatRestController(myWombatManager))
         ))
 
-In the above example it assumes you require Two-Way SSL, thus the AclRestFilter is defined. Make sure to define all filters before this one, __GenericUriStatsFilter__. The next thing to do is identify the URI's that are static. The framework will auto-magically track them. We don't want them to be tracked twice, thus returning incorrect stats on the static URIs. In `parameters.config` set  __`-com.deciphernow.server.config.staticRoutes.ignore=`__ to the explicit URI not to be tracked in this filter.
+In the above example it assumes you require Two-Way SSL, thus the [AclRestFilter](AclRestFilter.md) is defined. Make sure to define all filters before this one, __GenericUriStatsFilter__. The next thing to do is identify the URI's that are static. The framework will auto-magically track them. We don't want them to be tracked twice, thus returning incorrect stats on the static URIs. In `parameters.config` set  __`-com.deciphernow.server.config.staticRoutes.ignore=`__ to the explicit URI not to be tracked in this filter.
 
 __Example:__ if `/ping` and `/bonkers` are static routes in that they are defined as `get("/ping")` and `post("/bonkers")` in the Controller, then the property would be configured as follows:
 

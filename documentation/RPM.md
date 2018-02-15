@@ -35,7 +35,7 @@ The first property will be the version assigned to the RPM. Both this attribute 
         <major.minor>0.1</major.minor>
        
 ## Server POM configuration
-There are six properties in '\<properties\>' section of the 'server/pom.xml' that are leveraged through out the maven plugins as well as the shell scripts that get executed during RPM install or removal.
+There are six properties in '\<properties\>' section of the 'server/pom.xml' that are leveraged throughout the maven plugins as well as the shell scripts that get executed during RPM install or removal.
 
         
         <app.name>${project.artifactId}</app.name>
@@ -265,7 +265,7 @@ After the RPM is installed, create a service, but don't turn it on.
         }
         
 ### Pre-Remove script
-Before the RPM packaging is removed, if the service is on, stop it. As well, backup the full service. This is done to eventually delete everything but several directories that may container information like configuration or logs that we would want to transfer or review.
+Before the RPM packaging is removed, stop the service if it is running. As well, backup the full service. This is done to eventually delete everything but several directories that may container information like configuration or logs that we would want to transfer or review.
 
         #!/bin/sh -
         

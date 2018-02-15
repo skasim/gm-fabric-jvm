@@ -54,7 +54,7 @@ Example stacktrace:
    
 ## Microservice administration Units of Measure ( UOM ) issue
 To change the UOM for capturing metrics on the thrift endpoints an attribute / value pair must be configured in __parameters.config__. There are multiple units of measure and the default unit of measure is __MILLISECONDS__.
-The current available UOM are NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, and DAYS. The issue is that the UOM for metrics is MILLISECONDS but there is no UOM explicitly stating that and if the UOM for thrift metrics is changed, the end user will not understand that there is a disconnect between UOM on the metrics.json page.
+The current available UOM are NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, and DAYS. The issue is that the UOM for metrics is MILLISECONDS but there is no UOM explicitly stating that and if the UOM for Thrift metrics is changed, the end user will not understand that there is a disconnect between UOM on the metrics.json page.
 
 [See Microservice Framework code gotcha](UpgradingFramework.md)
    

@@ -1,7 +1,7 @@
 # Overview
 This document explains how to create a new microservice and it's various components. A maven archetype has been created to assist in creating a new service implementation.  The archetype will create a new maven project that has the following:
 
-## Perquisite
+## Prerequisite
 You have to have built the microservice framework. See ![README](../README.md)
 
 You need to install the tanuki software service wrapper delta pack into your local Maven repository.
@@ -47,24 +47,24 @@ For this example, the table below identifies the data entered.
 ## Project structure
 The following module and directory structure is generated.
 
-    - my-first-microservice
+    - myfirstmicroservice
         - business
             - pom.xml
             - src/main
                 - java/com.somepackage
                 - scala/com.somepackage
                     - MyFirstMicroserviceManager.scala
-        - config
-            - pom.xml
-            - src/main
-                - scala/com.somepackage
-                    - Config.scala
         - client
             - pom.xml
             - src/main
                 - java/com.somepackage
                 - scala/com.somepackage.client/thrift/
                     - MyFirstMicroserviceClientFactory.scala
+        - config
+            - pom.xml
+            - src/main
+                - scala/com.somepackage
+                    - Config.scala
         - model
             - pom.xml
             - src/main/thrift/
@@ -100,13 +100,20 @@ The following module and directory structure is generated.
 - Start the microservice
     - Traverse into the microservice:
     
-            $ cd myfirstmicroservice/server/target/myfirstmicroservice-server-0.1.0-SNAPSHOT-app/myfirstmicroservice-server-0.1.0-SNAPSHOT/bin
-        
-    - Start the service in foreground
+            $ cd server/target/myfirstmicroservice-server-0.1.0-SNAPSHOT-app/myfirstmicroservice-server-0.1.0-SNAPSHOT/bin
+
+    - The framework creates the service with a default user. If this user does not exist the service will fail to start. To solve this edit the service script:
+
+            $ vi myfirstmicroservice-server
+    
+    - Either comment out RUN_AS or delete it. Now you can run your service with the following commands.
+
+
+        - Start the service in foreground
     
             $ myfirstmicroservice console
             
-    - Start the service in background
+        - Start the service in background
 
             $ myfirstmicroservice start
         

@@ -67,7 +67,7 @@ To see the metrics of a particular RESTful service look for the following format
         "route/ping/GET/time/2XX.sum" : 0,
 
 
-To see the metrics for thrift service look for `srv/thrift::non-ssl/{end-point}`. Below is an example of what the metrics look like for ping. If the thrift service is ssl enabled then `srv/thrift::ssl/{end-point}`.
+To see the metrics for Thrift service look for `srv/thrift::non-ssl/{end-point}`. Below is an example of what the metrics look like for ping. If the Thrift service is SSL enabled then `srv/thrift::ssl/{end-point}`.
 
 
         "srv/thrift::non-ssl/method/ping.avg" : 0.0,

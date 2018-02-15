@@ -101,7 +101,7 @@ When referencing the attributes in java casting to the value type is required.
     
 
 ## Word to the wise
-Make sure instantiate any classes that use attributes, outside of the server, last within the premain for example __MyFirstMicroserviceManager__.
+Make sure to instantiate any classes that use attributes, outside of the server, last within the premain for example __MyFirstMicroserviceManager__.
 
       premain {
     
@@ -118,4 +118,4 @@ Make sure instantiate any classes that use attributes, outside of the server, la
         myFirstMicroserviceManager = new MyFirstMicroserviceManager
       }
 
-If classes are instantiated before the __premain__ and there attributes are being called within the code, they will always return the __DEFAULT__ value. 
+If classes are instantiated before the __premain__ and their attributes are being called within the code, they will always return the __DEFAULT__ value. 

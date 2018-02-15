@@ -1,8 +1,8 @@
 # Overview
-This document talks to the step to generate thrift classes.
+This document talks to the step to generate Thrift classes.
 
 ## Modification of your model.
-Every time you make a change to the thrift model you have to generate new source files. These files a Java files.
+Every time you make a change to the Thrift model you have to generate new source files. These files are Java files.
 
     $ mvn clean generate-sources
     

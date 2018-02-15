@@ -5,8 +5,8 @@ This document explains how to leverage the microservice framework client factory
 These examples assume you have created a test-client module and the correct resources have been assigned.
 
 ## Client 
-When needing to connect to a micro-microservice with a client that requires performance then leveraging the particular microservices' ThriftClientFactory
-to create the client is recommended. This should be done if one micro-microservice needs to communicate with another microservice. The returned client can
+When needing to connect to a microservice with a client that requires performance then leveraging the particular microservices' ThriftClientFactory
+to create the client is recommended. This should be done if one microservice needs to communicate with another microservice. The returned client can
 be configured for non-SSL or SSL.
 
 Example MyFirstMicroserviceClientFactory ( extends ThriftClientFactory ) : thrift client non-SSL   
@@ -41,7 +41,7 @@ The __MyFirstMicroserviceClientFactory__ is generated in your microservice proje
 ## Create thrift clients using ServiceIface
 Writing test clients that do not leverage the microservices client factory.
 
-Example thrift client non-SSL
+Example Thrift client non-SSL
 
     def nonSslExample() : Unit = {
         val client : MyFirstMicroservice.ServiceIface = Thrift.client.newIface(":30000", classOf[MyFirstMicroservice.ServiceIface])
@@ -49,7 +49,7 @@ Example thrift client non-SSL
         System.out.println(response.get)
     }
 
-Example thrift client 2-Way-SSL
+Example Thrift client 2-Way-SSL
 
     def sslExample() : Unit = {
         val client = Thrift.client
@@ -133,7 +133,7 @@ The following RESTful client example:
              * @throws Exception
              */
             protected void httpHitServer() throws Exception {
-                header("httpHitServerr");
+                header("httpHitServer");
                 CloseableHttpClient httpclient = HttpClients.createDefault();
                 HttpGet httpget = new HttpGet("http://localhost:20000/ping");
                 httpget.setHeader("user_dn",USER_TOKEN);
