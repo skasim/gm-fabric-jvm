@@ -20,6 +20,7 @@ import java.net.InetSocketAddress
 
 import com.twitter.finagle.Announcer
 import com.deciphernow.server.{config => configuration}
+import com.google.common.net.InetAddresses
 import com.twitter.logging.Logger
 
 /**
@@ -51,7 +52,9 @@ object GMFAnnouncer {
     * @param scheme
     */
   def announce(port : Int, scheme: String) : Unit = {
-    val announcementPoint = s"zk!${configuration.zk.zookeeperConnection()}!${configuration.zk.announcementPoint()}/${scheme}!0"
+    val host = GMFNetworkConfigurationResolver.getAnnounceHostname
+    val prefix = if (InetAddresses.isInetAddress(host)) "gm" else "zk"
+    val announcementPoint = s"${prefix}!${configuration.zk.zookeeperConnection()}!${configuration.zk.announcementPoint()}/${scheme}!0"
     Announcer.announce(new InetSocketAddress(GMFNetworkConfigurationResolver.getAnnounceHostname, port), announcementPoint)
   }
 }
