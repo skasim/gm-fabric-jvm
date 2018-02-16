@@ -99,6 +99,7 @@
 
         <!-- Testing -->
         <maven.test.runOrder>hourly</maven.test.runOrder>
+        <version.docker.plugin>0.20.1</version.docker.plugin>
         <version.junit>4.12</version.junit>
         <version.mockito>1.9.5</version.mockito>
         <version.surefire.plugin>2.20.1</version.surefire.plugin>
@@ -588,6 +589,29 @@
                                 <escapeString>\</escapeString>
                             </configuration>
                         </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>reserve-network-port</id>
+                            <goals>
+                                <goal>reserve-network-port</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <portNames>
+                                    <portName>docker.zookeeper.port</portName>
+                                </portNames>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${version.docker.plugin}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
