@@ -1,4 +1,4 @@
-# Overview [ 0.2.3 ]
+# Overview
 This page describes how to add in your own `attributes` to your service.
 
 ## Generation

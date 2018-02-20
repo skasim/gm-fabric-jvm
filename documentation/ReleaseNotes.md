@@ -1,6 +1,12 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.4
+
+### Issue 112
+
+- Using 'enableIpAddressResolution' was not registering IP address if DNS resolution is available.
+
 ## gm-fabric-jvm-0.2.3
 
 * Key is that attributes can now be referenced across all modules. No need to include a separate set of properties to be loaded by a Java properties loader.
