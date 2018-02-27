@@ -24,7 +24,6 @@ import com.twitter.app.GlobalFlagVisible
   *
   */
 package resources {
-
   object decryptClass extends GlobalFlag[String]("com.deciphernow.server.support.NoDecryptor","Class to decrypt data")
 }
 
@@ -49,7 +48,7 @@ package rest {
 
   object httpPort  extends GlobalFlag[String](":8888", "HTTP Port")
   object httpsPort extends GlobalFlag[String](":8999", "HTTPS Port")
-
+  object maxRequestSize extends GlobalFlag[Long](25, "Default unit of measure is Megabytes. Must be less than 2 GB!")
 }
 
 /**

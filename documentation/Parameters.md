@@ -33,6 +33,10 @@ are encrypted through your implementation then enable as shown.
 
     -com.deciphernow.server.config.resources.decryptClass=com.blah.my.own.Decryptor
     
+## Changing the Maximum Request Size
+The default value is **25** Megabytes. It is a long value always represented as **Megabytes**. It must be less than **2**GB. You don't have to specify the unit of measure.
+
+    -com.deciphernow.server.config.rest.maxRequestSize=25
 
 ### Bind and Announce
 To configure different ports to __BIND__ to or __ANNOUNCE__ different ports [see](AnnounceAndBind.md).

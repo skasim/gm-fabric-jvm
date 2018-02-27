@@ -27,6 +27,7 @@ import com.twitter.finatra.http.filters.{AccessLoggingFilter, ExceptionMappingFi
 import com.twitter.finatra.http.routing.HttpRouter
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.logging.Logger
+import com.twitter.util.StorageUnit
 
 
 /**
@@ -42,6 +43,14 @@ class GMFabricRestServer(filters: Seq[Filter[FinagleRequest, FinagleResponse,Fin
 
   lazy override val log = Logger.get(getClass)
 
+  /**
+    * Change the maximum Request Size. A long value always representing MB.
+    *
+    * Must be less than 2 GB.
+    *
+    * @return
+    */
+  override def defaultMaxRequestSize: StorageUnit = StorageUnit.fromMegabytes(com.deciphernow.server.config.rest.maxRequestSize.apply)
   /**
     * HTTP Port
     *
