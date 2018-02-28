@@ -1,6 +1,13 @@
 
 # Release Notes
 
+
+## gm-fabric-jvm-0.2.5
+
+### Issue 135
+
+- Unable to upload files greater than 5.2MB.
+
 ## gm-fabric-jvm-0.2.4
 
 ### Issue 112
