@@ -30,7 +30,6 @@ You will need to install:
 - Java 8
 - Scala 2.11.8
 - rpm
-- git
 
 ## How to do stuff
 The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a microservice.
@@ -48,6 +47,11 @@ How to code a microservice.
 - [How to build an RPM.](documentation/RPM.md)
 - [How to upgrade the microservice framework with new Twitter libraries.](documentation/UpgradingFramework.md)
 - [Upgrading microservices build an older version of gm-fabric-jvm](documentation/UpgradingOlderMicroservice.md)
+
+## Version Control System
+
+- [You should probably ignore these things.](documentation/VCS.md)
+
 ## Configuration
 Configuring a microservice.
 
