@@ -1,6 +1,16 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.6
+
+### Issue 132
+
+- Add documentation on how to upgrade microservice built on older version of the framework.
+- Some documentation corrections && cleanup.
+
+### Issue 123
+
+- Upgrade log4j to 1.2.17
 
 ## gm-fabric-jvm-0.2.5
 

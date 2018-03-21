@@ -20,7 +20,7 @@ A microservice ( MS ) is composed of four modules defined in the table below.
 | server | REST and Thrift endpoints. |
 
 ## Latest release
-- [gm-fabric-jvm-0.2.4](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.5)
+- [gm-fabric-jvm-0.2.5](https://github.com/DecipherNow/gm-fabric-jvm/releases/tag/gm-fabric-jvm-0.2.5)
 - [Release Notes:](documentation/ReleaseNotes.md)
 
 ## Generic Prerequisite
@@ -30,12 +30,13 @@ You will need to install:
 - Java 8
 - Scala 2.11.8
 - rpm
+- git
 
 ## How to do stuff
 The following section is made up of multiple sections describing how to code, configure and various other subject matter with respect to dealing with a microservice.
 
 ## Coding
-The various aspects of coding a microservice.
+How to code a microservice.
 
 <!-- https://github.com/DecipherNow -->
 
@@ -46,9 +47,9 @@ The various aspects of coding a microservice.
 - [Adding API documentation to your microservice.](documentation/APIDocumentation.md)
 - [How to build an RPM.](documentation/RPM.md)
 - [How to upgrade the microservice framework with new Twitter libraries.](documentation/UpgradingFramework.md)
-
+- [Upgrading microservices build an older version of gm-fabric-jvm](documentation/UpgradingOlderMicroservice.md)
 ## Configuration
-The various aspects of configuring a microservice.
+Configuring a microservice.
 
 - [Available parameters to configure for the microservice.](documentation/Parameters.md)
 - [Change announcement and bind ports.](documentation/AnnounceAndBind.md)
@@ -59,9 +60,10 @@ The various aspects of configuring a microservice.
 - [How to configure the microservice framework on windows.](documentation/MicrosoftWindowsConfiguration.md)
 
 #### Adding parameters
+Adding your own parameters and changing default behavior provided by the framework.
 
-- [Adding your own parameters](documentation/Config.md)
-- [What and where to configure](documentation/Parameters.md)
+- [Coding your own parameters.](documentation/Config.md)
+- [Provided parameters to change default behavior.](documentation/Parameters.md)
 
 #### Configuring metric plugins
 
