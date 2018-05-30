@@ -3,6 +3,10 @@
 
 ## gm-fabric-jvm-0.2.6
 
+### Issue 151
+
+- Added configuration to turn off announcement of `admin`, `http`, `https`, or `thrift` to zookeeper.
+
 ### Issue 148
 
 - Documentation cleanup.

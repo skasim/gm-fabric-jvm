@@ -20,6 +20,12 @@ package com.deciphernow.server.config
 import com.twitter.app.GlobalFlag
 import com.twitter.app.GlobalFlagVisible
 
+package announce {
+  object admin extends GlobalFlag[Boolean] (true, "")
+  object http extends GlobalFlag[Boolean] (true, "")
+  object https extends GlobalFlag[Boolean] (true, "")
+  object thrift extends GlobalFlag[Boolean] (true, "")
+}
 /**
   *
   */

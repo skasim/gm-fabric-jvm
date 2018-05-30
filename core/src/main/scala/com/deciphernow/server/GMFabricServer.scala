@@ -35,6 +35,8 @@ abstract class GMFabricServer extends App {
   var restServer : Option[GMFabricRestServer] = None
   var thriftServer : Option[GMFabricThriftServer] = None
 
+
+
   def rest(): Option[RestServer]
   def thrift(): Option[ThriftServer]
 
@@ -56,13 +58,24 @@ abstract class GMFabricServer extends App {
 
     sys.addShutdownHook(close(Time.fromSeconds(2)))
 
+    val announceAdmin  : Boolean = com.deciphernow.server.config.announce.admin.apply
+    val announceHttp   : Boolean = com.deciphernow.server.config.announce.http.apply
+    val announceHttps  : Boolean = com.deciphernow.server.config.announce.https.apply
+    val announceThrift : Boolean = com.deciphernow.server.config.announce.thrift.apply
+
     thrift match {
       case Some(_) =>
         log.ifDebug("creating thrift server.")
         thriftServer = Option(new GMFabricThriftServer(thrift.get.filters, thrift.get.service))
         thriftServer.foreach(_ => {
           thriftServer.get.main(Array())
-          GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceThriftPort,"thrift")
+          if (announceThrift) {
+            GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceThriftPort,"thrift")
+          }
+          else {
+            log.info("The thrift end-point has been configured to not be discoverable.")
+          }
+
         })
       case _ => log.info("No thrift server defined.")
     }
@@ -71,9 +84,25 @@ abstract class GMFabricServer extends App {
       case Some(_) =>
         log.ifDebug("creating restful server.")
         restServer = Option(new GMFabricRestServer(rest.get.filters, rest.get.controllers))
-        GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceAdminPort,"admin")
-        GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceHttpPort,"http")
-        GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceHttpsPort,"https")
+        if (announceAdmin) {
+          GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceAdminPort,"admin")
+        }
+        else {
+          log.info("The admin end-point has been configured to not be discoverable.")
+        }
+        if (announceHttp) {
+          GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceHttpPort,"http")
+        }
+        else {
+          log.info("The http end-point has been configured to not be discoverable.")
+        }
+        if (announceHttps) {
+          GMFAnnouncer.announce(GMFNetworkConfigurationResolver.getAnnounceHttpsPort,"https")
+        }
+        else {
+          log.info("The https end-point has been configured to not be discoverable.")
+        }
+
         restServer.get.main(Array())
       case _ => log.error("No rest server defined. All services will shutdown.")
     }
