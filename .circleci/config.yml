@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8
+    steps:
+      - checkout
+  test:
+    docker:
+      - image: circleci/openjdk:8
+    steps:
+      - checkout
+      - run: mvn install -DskipTests -DskipITs -Ddocker.skip
+      - run: mvn verify -P circle
+      - run: if [ -z "${CI_PULL_REQUEST}" ]; then mvn deploy -P deploy -P circle -s settings.xml; fi
