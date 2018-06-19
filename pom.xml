@@ -132,7 +132,6 @@
         <version.bouncycastle.plugin>1.0.0</version.bouncycastle.plugin>
         <version.maven-javadoc-plugin>3.0.0</version.maven-javadoc-plugin>
         <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-        <version.vault-plugin>1.0.0</version.vault-plugin>
 
     </properties>
 
@@ -412,9 +411,9 @@
                     <artifactId>bouncycastle-maven-plugin</artifactId>
                     <version>${version.bouncycastle.plugin}</version>
                     <configuration>
-                        <passphrase>${pgp.passphrase}</passphrase>
-                        <rings>${pgp.private}</rings>
-                        <userId>build@deciphernow.com</userId>
+                        <passphrase>${env.PGP_PASSPHRASE}</passphrase>
+                        <rings>${env.PGP_RINGS}</rings>
+                        <userId>${env.PGP_USER_ID}</userId>
                     </configuration>
                     <executions>
                         <execution>
@@ -423,43 +422,6 @@
                             <goals>
                                 <goal>sign</goal>
                             </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.deciphernow</groupId>
-                    <artifactId>vault-maven-plugin</artifactId>
-                    <version>${version.vault-plugin}</version>
-                    <executions>
-                        <execution>
-                            <id>pull</id>
-                            <phase>initialize</phase>
-                            <goals>
-                                <goal>pull</goal>
-                            </goals>
-                            <configuration>
-                                <servers>
-                                    <server>
-                                        <url>${env.VAULT_SERVER}</url>
-                                        <token>${env.VAULT_TOKEN}</token>
-                                        <paths>
-                                            <path>
-                                                <name>pgp-keys/build</name>
-                                                <mappings>
-                                                    <mapping>
-                                                        <key>pgp.passphrase</key>
-                                                        <property>pgp.passphrase</property>
-                                                    </mapping>
-                                                    <mapping>
-                                                        <key>pgp.private</key>
-                                                        <property>pgp.private</property>
-                                                    </mapping>
-                                                </mappings>
-                                            </path>
-                                        </paths>
-                                    </server>
-                                </servers>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -623,10 +585,6 @@
                     <plugin>
                         <groupId>com.deciphernow</groupId>
                         <artifactId>bouncycastle-maven-plugin</artifactId>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.deciphernow</groupId>
-                        <artifactId>vault-maven-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
