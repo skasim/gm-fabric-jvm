@@ -1,25 +1,19 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:8
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run: mvn install -DskipTests -DskipITs -Ddocker.skip
   test:
-    docker:
-      - image: circleci/openjdk:8
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run: mvn verify -P circle
   deploy:
-    docker:
-      - image: circleci/openjdk:8
+    machine: true
     steps:
       - checkout
-      - setup_remote_docker
       - run: if [ -z "${CI_PULL_REQUEST}" ]; then PGP_RINGS="$(echo ${PGP_RINGS_ENCODED} | base64 --decode)" mvn deploy -P deploy -s settings.xml; fi
 workflows:
   version: 2
