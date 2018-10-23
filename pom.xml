@@ -87,7 +87,7 @@
         <version.finatra>${version.twitter.finatra}</version.finatra>
         <version.guice-injection>4.0</version.guice-injection>
 
-        <version.httpclient>4.3.5</version.httpclient>
+        <version.httpclient>4.3.6</version.httpclient>
         <version.httpcore>4.3.2</version.httpcore>
 
         <!--<major.minor>0.1</major.minor>-->
