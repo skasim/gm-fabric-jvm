@@ -170,6 +170,7 @@ class GMFabricRestServer(filters: Seq[Filter[FinagleRequest, FinagleResponse,Fin
     }
 
     router.exceptionMapper[FailFastExceptionMapper]
+    router.exceptionMapper[IndividualRequestTimeoutExceptionMapper]
   }
 
   lazy val decrypter : Decryptor = DecryptorManager.getInstance
