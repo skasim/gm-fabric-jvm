@@ -1,6 +1,20 @@
 
 # Release Notes
 
+## gm-fabric-jvm-0.2.7
+
+### Issue 163
+
+Update Zookeeper version.
+
+### PR 162
+
+Add an IndividualRequestTimeoutException Mapper to HttpRouter 
+
+### Issue 160
+
+Remedy HTTP Security Vulnerability: https://nvd.nist.gov/vuln/detail/CVE-2015-5262
+
 ## gm-fabric-jvm-0.2.6
 
 ### Issue 151
