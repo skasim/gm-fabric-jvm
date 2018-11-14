@@ -1,6 +1,10 @@
 
 # Release Notes
 
+## 0.2.8-SNAPSHOT
+
+- TBD
+
 ## gm-fabric-jvm-0.2.7
 
 ### Issue 163
